@@ -11,14 +11,14 @@ body {
   text-align: center;
 }
 
-.contenedor{
-  background: rgba(255, 255, 255, 0.9);  /* Fondo blanco semi-transparente */
-  border-radius: 16px;                   /* Bordes redondeados */
-  padding: 30px;                         /* Espaciado interno */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);  /* Sombra elegante */
-  max-width: 800px;                      /* Ancho máximo */
-  width: 90%;                            /* Que se ajuste en móviles */
-  text-align: center;                    /* Centra texto dentro */
+.contenedor {
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+  border-radius: 16px; /* Bordes redondeados */
+  padding: 30px; /* Espaciado interno */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+  max-width: 800px; /* Ancho máximo */
+  width: 90%; /* Que se ajuste en móviles */
+  text-align: center; /* Centra texto dentro */
 }
 
 h1 {
@@ -68,8 +68,8 @@ p {
   margin-right: auto;
 }
 
-@media(max-width: 768px){
-  p{
+@media (max-width: 768px) {
+  p {
     width: 90%;
     font-size: lem;
   }

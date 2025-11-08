@@ -1,5 +1,5 @@
 import { text } from 'express';
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
 export const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -33,3 +33,38 @@ export const enviarCorreo = async ( nombre, email, servicio ) => {
     
     await transporter.sendMail(mailOptions);
 }
+
+async function enviarCorreoRegistro({ nombre, email, servicio }) {
+    const SMTP_HOST = process.env.SMTP_HOST;
+    const SMTP_PORT = process.env.SMTP_PORT;
+    const SMTP_USER = process.env.SMTP_USER;
+    const SMTP_PASS = process.env.SMTP_PASS;
+    const ADMIN_EMAIL = process.env.ADMIN_EMAIL || SMTP_USER;
+
+    if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+        console.log('nodemailer no configurado. Datos del registro:', { nombre, email, servicio });
+        return;
+    }
+
+    const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: Number(SMTP_PORT) || 587,
+        secure: false,
+        auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASS
+        }
+    });
+
+    const texto = `Nueva solicitud de servicio\n\nNombre: ${nombre}\nEmail: ${email}\nServicio: ${servicio}\nFecha: ${new Date().toISOString()}`;
+
+    await transporter.sendMail({
+        from: SMTP_USER,
+        to: ADMIN_EMAIL,
+        subject: 'Nueva solicitud de servicio',
+        text: texto,
+        replyTo: email || undefined
+    });
+}
+
+module.exports = { enviarCorreoRegistro };

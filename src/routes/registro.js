@@ -1,5 +1,5 @@
 const express = require('express');
-const { pool } = require('../config/db'); // ✅ Ruta correcta a config/db.js
+const { pool } = require('../config/db');
 const { enviarCorreo } = require('./correos');
 const { guardarRegistro } = require('./guardarRegistro');
 
@@ -7,17 +7,34 @@ const router = express.Router();
 
 router.post('/registro', async (req, res) => {
     const { nombre, email, servicio } = req.body;
-    console.log('📨 Datos recibidos:', { nombre, email, servicio });
+    
+    console.log('📨 DATOS RECIBIDOS EN /api/registro:', { nombre, email, servicio });
+    console.log('🔍 Tipo de servicio:', typeof servicio, 'Valor:', servicio);
 
     try {
-        // Intentar guardar en MySQL
+        // ✅ CONVERTIR servicio a número para el stored procedure
+        const servicioNumero = parseInt(servicio);
+        console.log('🔢 Servicio convertido a número:', servicioNumero);
+
+        // ✅ VERIFICAR CONEXIÓN A BD PRIMERO
+        console.log('🔌 Probando conexión a BD...');
+        const connection = await pool.getConnection();
+        console.log('✅ Conexión a BD exitosa');
+        connection.release();
+
+        // ✅ EJECUTAR STORED PROCEDURE
+        console.log('🔄 Ejecutando stored procedure...');
         const [rows] = await pool.query('CALL uspAddContacto(?, ?, ?)', 
-            [nombre, email, servicio]);
+            [nombre, email, servicioNumero]);
+
+        console.log('📊 Resultado de BD:', rows);
+        console.log('📋 Estructura de rows:', JSON.stringify(rows, null, 2));
 
         const resultado = rows[0][0].resultado;
+        console.log('🎯 Resultado del stored procedure:', resultado);
 
         if (resultado === 1) {
-            // Éxito en BD - enviar correo y guardar en archivo
+            console.log('✅ Registro exitoso en BD');
             await enviarCorreo(nombre, email, servicio);
             await guardarRegistro({ nombre, email, servicio });
             
@@ -26,17 +43,19 @@ router.post('/registro', async (req, res) => {
                 message: '✅ Solicitud recibida. Gracias, te contactaremos pronto.'
             });
         } else {
-            // Contacto ya existe
+            console.log('⚠️ Contacto ya existe en BD');
             res.status(409).json({
                 success: false, 
                 message: 'El contacto ya existe en nuestros registros.'
             });
         }
     } catch (error) {
-        console.error('❌ Error con MySQL:', error);
+        console.error('❌ ERROR EN REGISTRO:', error);
+        console.error('📝 Stack trace:', error.stack);
         
-        // FALLBACK: Si falla MySQL, guardar solo en archivo y enviar correo
+        // FALLBACK: Guardar en archivo y enviar correo aunque falle BD
         try {
+            console.log('🔄 Intentando fallback...');
             await guardarRegistro({ nombre, email, servicio });
             await enviarCorreo(nombre, email, servicio);
             
@@ -45,7 +64,7 @@ router.post('/registro', async (req, res) => {
                 message: '✅ Solicitud recibida (guardada localmente). Gracias!'
             });
         } catch (fallbackError) {
-            console.error('❌ Error en fallback:', fallbackError);
+            console.error('❌ ERROR EN FALLBACK:', fallbackError);
             res.status(500).json({
                 success: false, 
                 message: 'Error en el servidor', 

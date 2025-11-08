@@ -48,8 +48,59 @@
 
     <link rel="canonical" href="https://31106-albertocarreon-com.sitebuilder-es.webapps.net/">
     <script>window.checkAndChangeSvgColor = function (c) { try { var a = document.getElementById(c); if (a) { c = [["border", "borderColor"], ["outline", "outlineColor"], ["color", "color"]]; for (var h, b, d, f = [], e = 0, m = c.length; e < m; e++)if (h = window.getComputedStyle(a)[c[e][1]].replace(/\s/g, "").match(/^rgb[a]?\(([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})/i)) { b = ""; for (var g = 1; 3 >= g; g++)b += ("0" + parseInt(h[g], 10).toString(16)).slice(-2); "0" === b.charAt(0) && (d = parseInt(b.substr(0, 2), 16), d = Math.max(16, d), b = d.toString(16) + b.slice(-4)); f.push(c[e][0] + "=" + b) } if (f.length) { var k = a.getAttribute("data-src"), l = k + (0 > k.indexOf("?") ? "?" : "&") + f.join("&"); a.src != l && (a.src = l, a.outerHTML = a.outerHTML) } } } catch (n) { } };</script>
-    <script type="text/javascript" src="../index.js"></script>
+
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const data = {
+                nombre: document.getElementById("nombre").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                servicio: document.getElementById("servicio").options[document.getElementById("servicio").selectedIndex].text
+            };
+
+            // Validación básica
+            if (!data.nombre || !data.email) {
+                alert('⚠️ Por favor completa todos los campos obligatorios.');
+                return;
+            }
+
+            try {
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                button.innerHTML = 'Enviando...';
+                button.disabled = true;
+
+                const response = await fetch("/api/registro", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    form.reset(); // Limpiar formulario
+                } else {
+                    alert("❌ " + result.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("❌ Error de conexión. Intenta nuevamente.");
+            } finally {
+                // Restaurar botón
+                const button = form.querySelector('button[type="submit"]');
+                button.innerHTML = 'Solicita tu servicio';
+                button.disabled = false;
+            }
+        });
+    });
+</script>
 
 <body
     class="l wt-home l-default l-d-none b-btn-sq b-btn-s-l b-btn-dso b-btn-bw-1 img-d-n img-t-u img-h-n line-solid b-e-ds lbox-l  hn-tbg wnd-free-bar-limited  wnd-fe">
@@ -620,17 +671,15 @@
                                                 </div>
                                                 <div
                                                     class="form b b-s b-form-default f-rh-normal f-rg-normal f-br-none default cf labels-top">
-                                                    <form action="" method="post">
-
+                                                    <form id="formulario-servicio" method="post">
                                                         <fieldset class="form-fieldset">
                                                             <div>
                                                                 <div
                                                                     class="form-input form-text cf wnd-form-field wnd-required">
                                                                     <label
-                                                                        for="field-wnd_ShortTextField_83051756573082583702"><span
-                                                                            class="it b link">
+                                                                        for="field-wnd_ShortTextField_83051756573082583702">
+                                                                        <span class="it b link">
                                                                             <span class="it-c">Nombre</span>
-
                                                                         </span>
                                                                     </label>
                                                                     <input title="nombre" type="text" id="nombre"
@@ -639,24 +688,26 @@
                                                                 <div
                                                                     class="form-input form-email cf wnd-form-field wnd-required">
                                                                     <label
-                                                                        for="field-wnd_EmailField_72761756573082583768"><span
-                                                                            class="it b link">
+                                                                        for="field-wnd_EmailField_72761756573082583768">
+                                                                        <span class="it b link">
                                                                             <span class="it-c">Email</span>
-                                                                        </span></label>
+                                                                        </span>
+                                                                    </label>
                                                                     <input title="email" type="email" id="email"
                                                                         name="email" required maxlength="50">
                                                                 </div>
                                                                 <div
                                                                     class="form-input form-select cf wnd-form-field wnd-required">
                                                                     <label
-                                                                        for="field-wnd_SelectboxField_25301756573082583824"><span
-                                                                            class="it b link">
+                                                                        for="field-wnd_SelectboxField_25301756573082583824">
+                                                                        <span class="it b link">
                                                                             <span class="it-c">Servicio
                                                                                 solicitado</span>
-                                                                        </span></label>
+                                                                        </span>
+                                                                    </label>
                                                                     <div class="select">
                                                                         <select title="servicio" id="servicio"
-                                                                            name="servicio" required maxlength="50">
+                                                                            name="servicio" required>
                                                                             <option value="0">Limpieza Dental
                                                                                 Profesional</option>
                                                                             <option value="1">Ortodoncia y Alineadores
@@ -670,22 +721,75 @@
                                                             </div>
                                                         </fieldset>
 
-
-
                                                         <div class="form-submit b-btn cf b-btn-4">
-                                                            <button class="b-btn-l" type="submit" name="send"
-                                                                value="enviarDatos" id="index" onclick="">
-                                                                <span class="form-submit-text b-btn-t">Solicita tu
-                                                                    servicio</span>
+                                                            <button class="b-btn-l" type="submit" id="btn-solicitar">
+                                                                <span class="form-submit-text b-btn-t"
+                                                                    id="btn-text">Solicita tu servicio</span>
                                                             </button>
                                                         </div>
-
                                                     </form>
-
-
-
-
                                                 </div>
+
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        const formulario = document.getElementById('formulario-servicio');
+                                                        const boton = document.getElementById('btn-solicitar');
+                                                        const textoBoton = document.getElementById('btn-text');
+
+                                                        formulario.addEventListener('submit', async function (event) {
+                                                            event.preventDefault(); // Evita que se recargue la página
+
+                                                            // Obtener el texto del servicio seleccionado
+                                                            const selectServicio = document.getElementById('servicio');
+                                                            const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
+
+                                                            const datos = {
+                                                                nombre: document.getElementById('nombre').value.trim(),
+                                                                email: document.getElementById('email').value.trim(),
+                                                                servicio: textoServicio
+                                                            };
+
+                                                            // Validación
+                                                            if (!datos.nombre || !datos.email) {
+                                                                alert('⚠️ Por favor completa todos los campos obligatorios.');
+                                                                return;
+                                                            }
+
+                                                            // Cambiar estado del botón
+                                                            boton.disabled = true;
+                                                            textoBoton.textContent = 'Enviando...';
+
+                                                            try {
+                                                                console.log('📤 Enviando datos:', datos);
+
+                                                                const respuesta = await fetch('/api/registro', {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json'
+                                                                    },
+                                                                    body: JSON.stringify(datos)
+                                                                });
+
+                                                                const resultado = await respuesta.json();
+                                                                console.log('📥 Respuesta del servidor:', resultado);
+
+                                                                if (resultado.success) {
+                                                                    alert('✅ ' + resultado.message);
+                                                                    formulario.reset(); // Limpiar formulario
+                                                                } else {
+                                                                    alert('❌ ' + resultado.message);
+                                                                }
+                                                            } catch (error) {
+                                                                console.error('❌ Error:', error);
+                                                                alert('❌ Error de conexión. Por favor intenta nuevamente.');
+                                                            } finally {
+                                                                // Restaurar botón
+                                                                boton.disabled = false;
+                                                                textoBoton.textContent = 'Solicita tu servicio';
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                     </div>

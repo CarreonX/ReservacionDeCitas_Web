@@ -1,38 +1,29 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const connectDB = require('./config/db');
-require('ejs');
 
 const app = express();
 
+// Middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('case sensitive routing', true);
 app.set('appName', 'Reservacion de citas');
-app.set('port', 443 );
+app.set('port', 3000);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(morgan('dev'));
-app.use(express.json());
+// CONECTA LAS RUTAS
+const registroRoutes = require('./routes/registro');
+const homeRoutes = require('./routes/home');
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.use('/', homeRoutes);
+app.use('/api', registroRoutes); // Todas las APIs bajo /api
+
+app.listen(3000, () => {
+    console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);
+    console.log(`📧 Ruta de registro: http://localhost:3000/api/registro`);
 });
-
-app.post('/registro', async (req, res) => {
-    const { nombre, email, servicio } = req.body;
-    try {
-        const saved = await registro.guardarRegistro({ nombre, email, servicio });
-        await correos.enviarCorreoRegistro({ nombre, email, servicio });
-        res.json({ mensaje: `Solicitud recibida. Gracias, ${saved.nombre || 'usuario'}.`, registro: saved });
-    } catch (err) {
-        console.error('Error procesando /registro:', err);
-        res.status(500).json({ error: 'Error interno al procesar la solicitud.' });
-    }
-});
-
-app.listen(3000);
-console.log(`Server ${app.get('appName')} on port ${app.get('port')}`)

@@ -56,8 +56,28 @@
         const boton = document.getElementById('btn-solicitar');
         const textoBoton = document.getElementById('btn-text');
 
+        // ✅ PRIMERO: Probar conexión con el servidor
+        async function probarServidor() {
+            try {
+                const testResponse = await fetch('http://192.168.1.253:8080/api/test');
+                const testResult = await testResponse.json();
+                console.log('✅ Servidor conectado:', testResult);
+                return true;
+            } catch (error) {
+                console.error('❌ Servidor no disponible:', error);
+                return false;
+            }
+        }
+
         formulario.addEventListener('submit', async function (event) {
             event.preventDefault();
+
+            // Verificar que el servidor esté disponible
+            const servidorActivo = await probarServidor();
+            if (!servidorActivo) {
+                alert('❌ El servidor no está disponible. Verifica que esté corriendo en puerto 8080.');
+                return;
+            }
 
             const selectServicio = document.getElementById('servicio');
             const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
@@ -79,7 +99,6 @@
             try {
                 console.log('📤 Enviando datos:', datos);
 
-                // ✅ CAMBIO: Usar puerto 8080 explícitamente
                 const respuesta = await fetch('http://192.168.1.253:8080/api/registro', {
                     method: 'POST',
                     headers: {
@@ -87,6 +106,11 @@
                     },
                     body: JSON.stringify(datos)
                 });
+
+                // Verificar si la respuesta es válida
+                if (!respuesta.ok) {
+                    throw new Error(`Error HTTP: ${respuesta.status}`);
+                }
 
                 const resultado = await respuesta.json();
                 console.log('📥 Respuesta del servidor:', resultado);
@@ -98,13 +122,16 @@
                     alert('❌ ' + resultado.message);
                 }
             } catch (error) {
-                console.error('❌ Error:', error);
-                alert('❌ Error de conexión. Verifica que el servidor esté corriendo.');
+                console.error('❌ Error completo:', error);
+                alert('❌ Error de conexión: ' + error.message + '\n\nVerifica:\n1. Servidor corriendo en puerto 8080\n2. Firewall permite puerto 8080\n3. Ruta /api/registro existe');
             } finally {
                 boton.disabled = false;
                 textoBoton.textContent = 'Solicita tu servicio';
             }
         });
+
+        // Probar servidor al cargar la página
+        probarServidor();
     });
 </script>
 

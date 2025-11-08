@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('case sensitive routing', true);
 app.set('appName', 'Reservacion de citas');
-app.set('port', 3000);
+app.set('port', 8080); // ✅ CAMBIO: 3000 → 8080
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -21,9 +21,13 @@ const registroRoutes = require('./routes/registro');
 const homeRoutes = require('./routes/home');
 
 app.use('/', homeRoutes);
-app.use('/api', registroRoutes); // Todas las APIs bajo /api
+app.use('/api', registroRoutes);
 
-app.listen(3000, () => {
+// ✅ CAMBIO: Escuchar en todas las interfaces con puerto 8080
+app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);
-    console.log(`📧 Ruta de registro: http://localhost:3000/api/registro`);
+    console.log(`📍 Accesible desde:`);
+    console.log(`   http://localhost:8080`);
+    console.log(`   http://192.168.1.253:8080`);
+    console.log(`📧 Ruta de registro: http://192.168.1.253:8080/api/registro`);
 });

@@ -52,51 +52,57 @@
 </head>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
+        const formulario = document.getElementById('formulario-servicio');
+        const boton = document.getElementById('btn-solicitar');
+        const textoBoton = document.getElementById('btn-text');
 
-        form.addEventListener('submit', async function (event) {
+        formulario.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            const data = {
-                nombre: document.getElementById("nombre").value.trim(),
-                email: document.getElementById("email").value.trim(),
-                servicio: document.getElementById("servicio").options[document.getElementById("servicio").selectedIndex].text
+            const selectServicio = document.getElementById('servicio');
+            const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
+
+            const datos = {
+                nombre: document.getElementById('nombre').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                servicio: textoServicio
             };
 
-            // Validación básica
-            if (!data.nombre || !data.email) {
+            if (!datos.nombre || !datos.email) {
                 alert('⚠️ Por favor completa todos los campos obligatorios.');
                 return;
             }
 
-            try {
-                const button = form.querySelector('button[type="submit"]');
-                const originalText = button.innerHTML;
-                button.innerHTML = 'Enviando...';
-                button.disabled = true;
+            boton.disabled = true;
+            textoBoton.textContent = 'Enviando...';
 
-                const response = await fetch("/api/registro", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
+            try {
+                console.log('📤 Enviando datos:', datos);
+
+                // ✅ CAMBIO: Usar puerto 8080 explícitamente
+                const respuesta = await fetch('http://192.168.1.253:8080/api/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datos)
                 });
 
-                const result = await response.json();
+                const resultado = await respuesta.json();
+                console.log('📥 Respuesta del servidor:', resultado);
 
-                if (result.success) {
-                    alert(result.message);
-                    form.reset(); // Limpiar formulario
+                if (resultado.success) {
+                    alert('✅ ' + resultado.message);
+                    formulario.reset();
                 } else {
-                    alert("❌ " + result.message);
+                    alert('❌ ' + resultado.message);
                 }
-            } catch (err) {
-                console.error(err);
-                alert("❌ Error de conexión. Intenta nuevamente.");
+            } catch (error) {
+                console.error('❌ Error:', error);
+                alert('❌ Error de conexión. Verifica que el servidor esté corriendo.');
             } finally {
-                // Restaurar botón
-                const button = form.querySelector('button[type="submit"]');
-                button.innerHTML = 'Solicita tu servicio';
-                button.disabled = false;
+                boton.disabled = false;
+                textoBoton.textContent = 'Solicita tu servicio';
             }
         });
     });

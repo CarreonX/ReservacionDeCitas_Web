@@ -1,9 +1,28 @@
 const express = require('express');
-const { pool } = require('../config/db');
+const pool = require('../config/db');
 const { enviarCorreo } = require('./correos');
 const { guardarRegistro } = require('./guardarRegistro');
+const path = require('path');
 
 const router = express.Router();
+
+console.log('🔍 Pool importado:', typeof pool, pool ? '✅ Existe' : '❌ Undefined');
+
+// Función para probar la conexión
+async function probarConexionBD() {
+    try {
+        const connection = await pool.getConnection();
+        console.log('✅ Conexión a BD exitosa');
+        connection.release();
+        return true;
+    } catch (error) {
+        console.error('❌ Error de conexión a BD:', error.message);
+        return false;
+    }
+}
+
+// Llamar la función al cargar el módulo
+probarConexionBD();
 
 // ✅ FUNCIÓN PARA MAPEAR SERVICIO A NÚMERO
 function obtenerNumeroServicio(textoServicio) {

@@ -5,36 +5,35 @@ const { guardarRegistro } = require('./guardarRegistro');
 
 const router = express.Router();
 
+// ✅ FUNCIÓN PARA MAPEAR SERVICIO A NÚMERO
+function obtenerNumeroServicio(textoServicio) {
+    const servicios = {
+        'Limpieza Dental Profesional': 0,
+        'Ortodoncia y Alineadores': 1,
+        'Estética Dental': 2,
+        'Servicio Personalizado': 3
+    };
+    return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 3;
+}
+
 router.post('/registro', async (req, res) => {
     const { nombre, email, servicio } = req.body;
     
-    console.log('📨 DATOS RECIBIDOS EN /api/registro:', { nombre, email, servicio });
-    console.log('🔍 Tipo de servicio:', typeof servicio, 'Valor:', servicio);
+    console.log('📨 DATOS RECIBIDOS:', { nombre, email, servicio });
 
     try {
-        // ✅ CONVERTIR servicio a número para el stored procedure
-        const servicioNumero = parseInt(servicio);
-        console.log('🔢 Servicio convertido a número:', servicioNumero);
-
-        // ✅ VERIFICAR CONEXIÓN A BD PRIMERO
-        console.log('🔌 Probando conexión a BD...');
-        const connection = await pool.getConnection();
-        console.log('✅ Conexión a BD exitosa');
-        connection.release();
+        // ✅ MAPEAR SERVICIO A NÚMERO
+        const servicioNumero = obtenerNumeroServicio(servicio);
+        console.log('🔢 Servicio mapeado:', servicio, '→', servicioNumero);
 
         // ✅ EJECUTAR STORED PROCEDURE
-        console.log('🔄 Ejecutando stored procedure...');
         const [rows] = await pool.query('CALL uspAddContacto(?, ?, ?)', 
             [nombre, email, servicioNumero]);
 
-        console.log('📊 Resultado de BD:', rows);
-        console.log('📋 Estructura de rows:', JSON.stringify(rows, null, 2));
-
+        console.log('📊 Resultado BD:', rows);
         const resultado = rows[0][0].resultado;
-        console.log('🎯 Resultado del stored procedure:', resultado);
 
         if (resultado === 1) {
-            console.log('✅ Registro exitoso en BD');
             await enviarCorreo(nombre, email, servicio);
             await guardarRegistro({ nombre, email, servicio });
             
@@ -43,19 +42,16 @@ router.post('/registro', async (req, res) => {
                 message: '✅ Solicitud recibida. Gracias, te contactaremos pronto.'
             });
         } else {
-            console.log('⚠️ Contacto ya existe en BD');
             res.status(409).json({
                 success: false, 
                 message: 'El contacto ya existe en nuestros registros.'
             });
         }
     } catch (error) {
-        console.error('❌ ERROR EN REGISTRO:', error);
-        console.error('📝 Stack trace:', error.stack);
+        console.error('❌ ERROR BD:', error.message);
         
-        // FALLBACK: Guardar en archivo y enviar correo aunque falle BD
+        // FALLBACK
         try {
-            console.log('🔄 Intentando fallback...');
             await guardarRegistro({ nombre, email, servicio });
             await enviarCorreo(nombre, email, servicio);
             
@@ -64,11 +60,9 @@ router.post('/registro', async (req, res) => {
                 message: '✅ Solicitud recibida (guardada localmente). Gracias!'
             });
         } catch (fallbackError) {
-            console.error('❌ ERROR EN FALLBACK:', fallbackError);
             res.status(500).json({
                 success: false, 
-                message: 'Error en el servidor', 
-                error: error.message
+                message: 'Error en el servidor'
             });
         }
     }

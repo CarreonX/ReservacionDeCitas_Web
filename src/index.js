@@ -5,6 +5,13 @@ const cors = require('cors'); // ✅ AGREGAR ESTO
 
 const app = express();
 
+app.use((req, res, next) => {
+    if (req.hostname === 'www.carreon.com' || req.hostname === 'carreon.com') {
+        return res.redirect(301, `http://192.168.1.253:8080${req.url}`);
+    }
+    next();
+});
+
 // ✅ MIDDLEWARE CORS - AGREGAR ESTO
 app.use(cors({
     origin: ['http://192.168.1.253', 'http://localhost'],

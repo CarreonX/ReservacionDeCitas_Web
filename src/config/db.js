@@ -1,8 +1,8 @@
 const mariadb = require('mariadb/promise');
 
 const poolConfig = {
-    host: 'localhost',
-    user: 'remoto',
+    host: '192.168.1.253',
+    user: 'root',
     password: 'Ztklwxc14348',
     database: 'dbClinica_Dental',
     connectionLimit: 5,

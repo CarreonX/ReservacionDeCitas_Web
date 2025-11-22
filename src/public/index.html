@@ -59,7 +59,7 @@
         // ✅ PRIMERO: Probar conexión con el servidor
         async function probarServidor() {
             try {
-                const testResponse = await fetch('http://192.168.1.253:8080/api/test');
+                const testResponse = await fetch('http://192.168.9.71:8080/api/test');
                 const testResult = await testResponse.json();
                 console.log('✅ Servidor conectado:', testResult);
                 return true;
@@ -99,7 +99,7 @@
             try {
                 console.log('📤 Enviando datos:', datos);
 
-                const respuesta = await fetch('http://192.168.1.253:8080/api/registro', {
+                const respuesta = await fetch('http://192.168.9.71:8080/api/registro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

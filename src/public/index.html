@@ -50,90 +50,6 @@
     <script>window.checkAndChangeSvgColor = function (c) { try { var a = document.getElementById(c); if (a) { c = [["border", "borderColor"], ["outline", "outlineColor"], ["color", "color"]]; for (var h, b, d, f = [], e = 0, m = c.length; e < m; e++)if (h = window.getComputedStyle(a)[c[e][1]].replace(/\s/g, "").match(/^rgb[a]?\(([0-9]{1,3}),([0-9]{1,3}),([0-9]{1,3})/i)) { b = ""; for (var g = 1; 3 >= g; g++)b += ("0" + parseInt(h[g], 10).toString(16)).slice(-2); "0" === b.charAt(0) && (d = parseInt(b.substr(0, 2), 16), d = Math.max(16, d), b = d.toString(16) + b.slice(-4)); f.push(c[e][0] + "=" + b) } if (f.length) { var k = a.getAttribute("data-src"), l = k + (0 > k.indexOf("?") ? "?" : "&") + f.join("&"); a.src != l && (a.src = l, a.outerHTML = a.outerHTML) } } } catch (n) { } };</script>
 
 </head>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const formulario = document.getElementById('formulario-servicio');
-        const boton = document.getElementById('btn-solicitar');
-        const textoBoton = document.getElementById('btn-text');
-
-        // ✅ PRIMERO: Probar conexión con el servidor
-        async function probarServidor() {
-            try {
-                const testResponse = await fetch('http://192.168.9.71:8080/api/test');
-                const testResult = await testResponse.json();
-                console.log('✅ Servidor conectado:', testResult);
-                return true;
-            } catch (error) {
-                console.error('❌ Servidor no disponible:', error);
-                return false;
-            }
-        }
-
-        formulario.addEventListener('submit', async function (event) {
-            event.preventDefault();
-
-            // Verificar que el servidor esté disponible
-            const servidorActivo = await probarServidor();
-            if (!servidorActivo) {
-                alert('❌ El servidor no está disponible. Verifica que esté corriendo en puerto 8080.');
-                return;
-            }
-
-            const selectServicio = document.getElementById('servicio');
-            const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
-
-            const datos = {
-                nombre: document.getElementById('nombre').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                servicio: textoServicio
-            };
-
-            if (!datos.nombre || !datos.email) {
-                alert('⚠️ Por favor completa todos los campos obligatorios.');
-                return;
-            }
-
-            boton.disabled = true;
-            textoBoton.textContent = 'Enviando...';
-
-            try {
-                console.log('📤 Enviando datos:', datos);
-
-                const respuesta = await fetch('http://192.168.9.71:8080/api/registro', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datos)
-                });
-
-                // Verificar si la respuesta es válida
-                if (!respuesta.ok) {
-                    throw new Error(`Error HTTP: ${respuesta.status}`);
-                }
-
-                const resultado = await respuesta.json();
-                console.log('📥 Respuesta del servidor:', resultado);
-
-                if (resultado.success) {
-                    alert('✅ ' + resultado.message);
-                    formulario.reset();
-                } else {
-                    alert('❌ ' + resultado.message);
-                }
-            } catch (error) {
-                console.error('❌ Error completo:', error);
-                alert('❌ Error de conexión: ' + error.message + '\n\nVerifica:\n1. Servidor corriendo en puerto 8080\n2. Firewall permite puerto 8080\n3. Ruta /api/registro existe');
-            } finally {
-                boton.disabled = false;
-                textoBoton.textContent = 'Solicita tu servicio';
-            }
-        });
-
-        // Probar servidor al cargar la página
-        probarServidor();
-    });
-</script>
 
 <body
     class="l wt-home l-default l-d-none b-btn-sq b-btn-s-l b-btn-dso b-btn-bw-1 img-d-n img-t-u img-h-n line-solid b-e-ds lbox-l  hn-tbg wnd-free-bar-limited  wnd-fe">
@@ -762,7 +678,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
-
+                                                <!--
                                                 <script>
                                                     document.addEventListener('DOMContentLoaded', function () {
                                                         const formulario = document.getElementById('formulario-servicio');
@@ -822,7 +738,7 @@
                                                             }
                                                         });
                                                     });
-                                                </script>
+                                                </script>-->
                                             </div>
                                         </div>
                                     </div>
@@ -886,6 +802,8 @@
 
     </div>
 
+
+    <script src="js/registro-client.js"></script>
 
 </body>
 

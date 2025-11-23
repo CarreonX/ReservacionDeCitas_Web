@@ -7,14 +7,14 @@ const app = express();
 
 app.use((req, res, next) => {
     if (req.hostname === 'www.carreon.com' || req.hostname === 'carreon.com') {
-        return res.redirect(301, `http://192.168.9.71:8080${req.url}`);
+        return res.redirect(301, `http://localhost:8080${req.url}`);
     }
     next();
 });
 
 // ✅ MIDDLEWARE CORS - AGREGAR ESTO
 app.use(cors({
-    origin: ['http://192.168.9.71', 'http://localhost'],
+    origin: ['http://localhost', 'http://localhost'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
@@ -48,7 +48,7 @@ app.get('/api/test', (req, res) => {
 
 app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);
-    console.log(`📍 Accesible desde: http://192.168.9.71:8080`);
-    console.log(`📧 Ruta de registro: http://192.168.9.71:8080/api/registro`);
-    console.log(`🧪 Ruta de prueba: http://192.168.9.71:8080/api/test`);
+    console.log(`📍 Accesible desde: http://localhost:8080`);
+    console.log(`📧 Ruta de registro: http://localhost:8080/api/registro`);
+    console.log(`🧪 Ruta de prueba: http://localhost:8080/api/test`);
 });

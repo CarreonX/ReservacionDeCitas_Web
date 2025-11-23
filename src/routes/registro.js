@@ -7,87 +7,66 @@ const router = express.Router();
 
 function obtenerNumeroServicio(textoServicio) {
     const servicios = {
-        'Limpieza Dental Profesional': 0,
-        'Ortodoncia y Alineadores': 1,
-        'Estética Dental': 2,
-        'Servicio Personalizado': 3
+        'Limpieza Dental Profesional': 1,
+        'Ortodoncia y Alineadores': 2,
+        'Estética Dental': 3,
+        'Servicio Personalizado': 4
     };
-    return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 3;
+    // Si ya vienen números, retornarlos
+    const num = parseInt(textoServicio, 10);
+    if (!isNaN(num)) return num;
+    return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
 }
 
-// ✅ FUNCIÓN MEJORADA PARA MANEJAR CONEXIÓN
+// Reutilizable: obtiene conexión del pool y ejecuta callback
 async function ejecutarEnBD(callback) {
     let connection;
     try {
         connection = await pool.getConnection();
-        console.log('🔗 Conexión obtenida del pool');
         return await callback(connection);
     } catch (error) {
-        console.error('❌ Error con BD:', error.message);
+        console.error('Error en BD:', error.message);
         throw error;
     } finally {
         if (connection) {
             await connection.release();
-            console.log('🔓 Conexión liberada');
         }
     }
 }
 
 router.post('/registro', async (req, res) => {
     const { nombre, email, servicio } = req.body;
-    
-    console.log('📨 DATOS RECIBIDOS:', { nombre, email, servicio });
+
+    console.log('Datos recibidos en /api/registro:', { nombre, email, servicio });
 
     try {
         const servicioNumero = obtenerNumeroServicio(servicio);
-        console.log('🔢 Servicio mapeado:', servicio, '→', servicioNumero);
 
-        // ✅ USAR LA NUEVA FUNCIÓN DE CONEXIÓN
-        const [rows] = await ejecutarEnBD(async (connection) => {
-            return await connection.query('CALL uspAddContacto(?, ?, ?)', 
-                [nombre, email, servicioNumero]);
+        const result = await ejecutarEnBD(async (connection) => {
+            const [rows] = await connection.query('CALL uspAddContacto(?, ?, ?)', [nombre, email, servicioNumero]);
+            return rows;
         });
 
-        console.log('📊 Resultado BD:', rows);
-        const resultado = rows[0][0].resultado;
+        // Dependiendo del driver, el resultado puede variar. Intentamos leer un campo esperado.
+        const resultado = (result && result[0] && result[0][0] && result[0][0].resultado) || (result && result[0] && result[0].resultado);
 
         if (resultado === 1) {
-            console.log('✅ Registro exitoso en BD MySQL');
             await enviarCorreo(nombre, email, servicio);
             await guardarRegistro({ nombre, email, servicio });
-            
-            res.json({
-                success: true, 
-                message: '✅ Solicitud recibida y registrada en BD. Gracias!'
-            });
+            return res.json({ success: true, message: '✅ Solicitud recibida y registrada en BD. Gracias!' });
         } else {
-            console.log('⚠️ Contacto ya existe en BD');
-            res.status(409).json({
-                success: false, 
-                message: 'El contacto ya existe en nuestros registros.'
-            });
+            return res.status(409).json({ success: false, message: 'El contacto ya existe en nuestros registros.' });
         }
     } catch (error) {
-        console.error('❌ ERROR BD:', error.message);
-        
-        // FALLBACK - Siempre guardar en archivo y enviar correo
+        console.error('ERROR en /api/registro:', error);
+        // Fallback: guardar en archivo y enviar correo
         try {
-            console.log('🔄 Usando fallback (archivo local)...');
-            const registroGuardado = await guardarRegistro({ nombre, email, servicio });
-            await enviarCorreo(nombre, email, servicio);
-            
-            console.log('💾 Registro guardado localmente:', registroGuardado.id);
-            
-            res.json({
-                success: true,
-                message: '✅ Solicitud recibida (guardada localmente). Gracias!'
-            });
+            const registroGuardado = await guardarRegistro({ nombre: req.body.nombre, email: req.body.email, servicio: req.body.servicio });
+            await enviarCorreo(req.body.nombre, req.body.email, req.body.servicio);
+            return res.json({ success: true, message: '✅ Solicitud recibida (guardada localmente). Gracias!' });
         } catch (fallbackError) {
-            console.error('❌ ERROR EN FALLBACK:', fallbackError);
-            res.status(500).json({
-                success: false, 
-                message: 'Error en el servidor'
-            });
+            console.error('ERROR fallback:', fallbackError);
+            return res.status(500).json({ success: false, message: 'Error en el servidor' });
         }
     }
 });

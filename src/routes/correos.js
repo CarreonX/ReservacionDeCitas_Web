@@ -16,6 +16,7 @@ function enviarCorreo(nombre, email, servicio) {
         'Limpieza Dental Profesional': 'abelardogeronimo243@gmail.com',
         'Ortodoncia y Alineadores': 'L22TE0524@teziutlan.tecnm.mx',
         'Estética Dental': 'carreonalberto22te@outlook.com',
+        'Estetica Dental': 'carreonalberto22te@outlook.com',
         'Servicio Personalizado': 'tijeritas.tekla@gmail.com'
     };
 

@@ -1,18 +1,28 @@
-document.getElementById("index.html").addEventListener("submit", async (e) => {
-    e.preventDefault(); // Evita recargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formulario-servicio');
+    if (!form) return;
 
-    const data = {
-        nombre: document.getElementById("nombre").value,
-        email: document.getElementById("email").value,
-        servicio: document.getElementById("servicio").value
-    };
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const response = await fetch("/routes/registro.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        const data = {
+            nombre: document.getElementById('nombre').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            servicio: document.getElementById('servicio').options[document.getElementById('servicio').selectedIndex].text
+        };
+
+        try {
+            const response = await fetch('/api/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            alert(result.message || 'Solicitud enviada');
+        } catch (err) {
+            console.error('Error enviando solicitud:', err);
+            alert('Error al enviar la solicitud');
+        }
     });
-
-    const result = await response.json();
-    alert(result.mensaje);
 });

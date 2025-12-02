@@ -681,67 +681,6 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <!--
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function () {
-                                                        const formulario = document.getElementById('formulario-servicio');
-                                                        const boton = document.getElementById('btn-solicitar');
-                                                        const textoBoton = document.getElementById('btn-text');
-
-                                                        formulario.addEventListener('submit', async function (event) {
-                                                            event.preventDefault(); // Evita que se recargue la página
-
-                                                            // Obtener el texto del servicio seleccionado
-                                                            const selectServicio = document.getElementById('servicio');
-                                                            const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
-
-                                                            const datos = {
-                                                                nombre: document.getElementById('nombre').value.trim(),
-                                                                email: document.getElementById('email').value.trim(),
-                                                                servicio: textoServicio
-                                                            };
-
-                                                            // Validación
-                                                            if (!datos.nombre || !datos.email) {
-                                                                alert('⚠️ Por favor completa todos los campos obligatorios.');
-                                                                return;
-                                                            }
-
-                                                            // Cambiar estado del botón
-                                                            boton.disabled = true;
-                                                            textoBoton.textContent = 'Enviando...';
-
-                                                            try {
-                                                                console.log('📤 Enviando datos:', datos);
-
-                                                                const respuesta = await fetch('/api/registro', {
-                                                                    method: 'POST',
-                                                                    headers: {
-                                                                        'Content-Type': 'application/json'
-                                                                    },
-                                                                    body: JSON.stringify(datos)
-                                                                });
-
-                                                                const resultado = await respuesta.json();
-                                                                console.log('📥 Respuesta del servidor:', resultado);
-
-                                                                if (resultado.success) {
-                                                                    alert('✅ ' + resultado.message);
-                                                                    formulario.reset(); // Limpiar formulario
-                                                                } else {
-                                                                    alert('❌ ' + resultado.message);
-                                                                }
-                                                            } catch (error) {
-                                                                console.error('❌ Error:', error);
-                                                                alert('❌ Error de conexión. Por favor intenta nuevamente.');
-                                                            } finally {
-                                                                // Restaurar botón
-                                                                boton.disabled = false;
-                                                                textoBoton.textContent = 'Solicita tu servicio';
-                                                            }
-                                                        });
-                                                    });
-                                                </script>-->
                                             </div>
                                         </div>
                                     </div>
@@ -802,9 +741,7 @@
                 </div>
             </footer>
         </div>
-
     </div>
-
 
     <script src="js/registro-client.js"></script>
 

@@ -23,6 +23,10 @@ router.route( '/addContacto' ).post( async ( req, res ) => {
     res.json( result );
 });
 
+router.route('/login').get((req, res) => {
+    res.sendFile(path.join(__dirname, '../public/Html', 'login.html'));
+});
+
 app.listen( port);
 console.log( 'Server running on port ' + port );
 

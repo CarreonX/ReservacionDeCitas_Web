@@ -3,26 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const boton = document.getElementById('btn-solicitar');
     const textoBoton = document.getElementById('btn-text');
 
-    async function probarServidor() {
-        try {
-            const testResponse = await fetch('/api/test');
-            const testResult = await testResponse.json();
-            console.log('✅ Servidor conectado:', testResult);
-            return true;
-        } catch (error) {
-            console.error('❌ Servidor no disponible:', error);
-            return false;
-        }
-    }
-
     formulario.addEventListener('submit', async function (event) {
         event.preventDefault();
-
-        const servidorActivo = await probarServidor();
-        if (!servidorActivo) {
-            alert('❌ El servidor no está disponible. Verifica que esté corriendo.');
-            return;
-        }
 
         const selectServicio = document.getElementById('servicio');
         const textoServicio = selectServicio.options[selectServicio.selectedIndex].text;
@@ -44,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             console.log('📤 Enviando datos:', datos);
 
-            const respuesta = await fetch('/api/registro', {
+            const respuesta = await fetch('/routes/home', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,9 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
             textoBoton.textContent = 'Solicita tu servicio';
         }
     });
-
-    // Probar servidor al cargar la página
-    probarServidor();
 });
 
 // Para compatibilidad, exponer una función mínima si algún HTML la llama

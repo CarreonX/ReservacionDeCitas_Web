@@ -6,8 +6,8 @@ const poolConfig = {
     password: 'Ztklwxc14348',
     database: 'dbClinica_Dental',
     connectionLimit: 10,        // aumentar si es necesario
-    acquireTimeout: 10000,      // ← 10s en lugar de 300ms
-    connectTimeout: 10000,
+    acquireTimeout: 300,      // ← 10s en lugar de 300ms
+    connectTimeout: 300,
     supportBigNumbers: true,
     bigNumbersStrings: true
 };
@@ -16,37 +16,35 @@ class DBConnector{
     dbConnector = mariadb.createPool(poolConfig);
 
     async query(param){
-        let conn;
-        let ret = null;
-        try {
-            conn = await this.dbConnector.getConnection();
-            ret = await conn.query(param);
-            return ret;
-        } catch (err) {
-            console.error('❌ Error en consulta:', err);
-            throw err;
-        } finally {
-            if (conn) {
-                try { await conn.release(); } catch (e) { /* fallback */ }
-            }
-        }
+        var conn = await this.dbConnector.getConnection();
+        var ret = null;
+
+        await conn.query(param)
+        .then( data => {
+            ret = data;
+            conn.end();
+        })
+        .catch( err => {
+            console.log( err );
+            conn.end();
+        } );
+        return ret;
     }
 
     async queryWithParams(param, values){
-        let conn;
-        let ret = null;
-        try {
-            conn = await this.dbConnector.getConnection();
-            ret = await conn.query(param, values);
-            return ret;
-        } catch (err) {
-            console.error('❌ Error en consulta con parámetros:', err);
-            throw err;
-        } finally {
-            if (conn) {
-                try { await conn.release(); } catch (e) { /* fallback */ }
-            }
-        }
+        var conn = await this.dbConnector.getConnection();
+        var ret = null;
+
+        await conn.query(param, values)
+        .then( data => {
+            ret = data;
+            conn.end();
+        })
+        .catch( err => {
+            console.log( err );
+            conn.end();
+        } );
+        return ret;
     }
 }
 

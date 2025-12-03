@@ -76,21 +76,45 @@ function obtenerNumeroServicio(textoServicio) {
     return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
 }
 
-// Reutilizable: obtiene conexión del pool y ejecuta callback
-// async function ejecutarEnBD(callback) {
-//     let connection;
-//     try {
-//         connection = await pool.getConnection();
-//         return await callback(connection);
-//     } catch (error) {
-//         console.error('Error en BD:', error.message);
-//         throw error;
-//     } finally {
-//         if (connection) {
-//             await connection.release();
-//         }
-//     }
-// }
+async function enviarFormulario() {
+
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const servicio = document.getElementById('servicio').value;
+
+    if( !nombre || !email || !servicio ) {
+        mostrarMensajeAgregar('Por favor, completa todos los campos.', 'error');
+        return;
+    }
+
+    try{
+        let response= await fetch('http://localhost:8080/registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: nombre,
+                email: email,
+                servicio: servicio
+            })
+        });
+
+        let data = await response.json();
+        console.log('Respuesta del servidor:', data);
+
+        if(response.ok){
+            alert('Contacto agregado correctamente.', 'success');
+            limpiarFormularioAgregar();
+        } else {
+            mostrarMensajeAgregar('Error al agregar contacto:', 'error');
+        }
+    }catch(error){
+        console.error('Error en la solicitud:', error);
+        mostrarMensajeAgregar('Error en la solicitud al servidor.', 'error');
+    }
+    
+}
 
 router.post('/registro', async (req, res) => {
     const { nombre, email, servicio } = req.body;

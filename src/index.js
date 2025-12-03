@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 
 // ✅ MIDDLEWARE CORS - AGREGAR ESTO
 app.use(cors({
-    origin: ['http://localhost', 'http://localhost'],
+    origin: ['http://localhost:8080', 'http://localhost:8080'],
     methods: ['GET', 'POST'],
     credentials: true
 }));

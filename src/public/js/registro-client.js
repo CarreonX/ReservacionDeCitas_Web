@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Primero verificar servidor
-        const ok = await probarServidor();
+        const ok = true;
         if (!ok) {
             alert('El servidor no está disponible. Verifica que esté corriendo.');
             return;

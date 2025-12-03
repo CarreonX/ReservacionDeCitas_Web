@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-router.route( '/addContacto' ).post( async ( req, res ) => {
+router.route( '/addContacto').post( async ( req, res ) => {
     try {
         const result = await DBConnector.queryWithParams( 'CALL uspAddContacto(?, ?, ?)', 
             [ req.body.nombre, req.body.email, req.body.servicio ] );

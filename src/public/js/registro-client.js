@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Comprueba si el servidor responde correctamente (usa ruta RELATIVA)
     async function probarServidor() {
         try {
-            const res = await fetch('/api/test', { method: 'GET' });
+            const res = await fetch('http://localhost:8080/api/test', { method: 'GET' });
             if (!res.ok) {
                 console.warn('probarServidor: respuesta no OK', res.status);
                 return false;
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             console.log('📤 Enviando datos a /addContacto:', { nombre, email, servicio });
 
-            const res = await fetch('/addContacto', {
+            const res = await fetch('http://localhost:8080/addContacto', {
                  method: 'POST',
                  headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify({ nombre, email, servicio })

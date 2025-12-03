@@ -28,7 +28,6 @@ async function guardarRegistro({ nombre, email, servicio }) {
 }
 
 async function enviarCorreo(nombre, email, servicio) {
-    // intento de require de nodemailer opcional
     let nodemailer;
     try {
         nodemailer = require('nodemailer');
@@ -70,63 +69,21 @@ function obtenerNumeroServicio(textoServicio) {
         'Estética Dental': 3,
         'Servicio Personalizado': 4
     };
-    // Si ya vienen números, retornarlos
     const num = parseInt(textoServicio, 10);
     if (!isNaN(num)) return num;
     return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
 }
 
-async function enviarFormulario() {
-
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const servicio = document.getElementById('servicio').value;
-
-    if( !nombre || !email || !servicio ) {
-        mostrarMensajeAgregar('Por favor, completa todos los campos.', 'error');
-        return;
-    }
-
-    try{
-        let response= await fetch('http://localhost:8080/registro', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nombre: nombre,
-                email: email,
-                servicio: servicio
-            })
-        });
-
-        let data = await response.json();
-        console.log('Respuesta del servidor:', data);
-
-        if(response.ok){
-            alert('Contacto agregado correctamente.', 'success');
-            limpiarFormularioAgregar();
-        } else {
-            mostrarMensajeAgregar('Error al agregar contacto:', 'error');
-        }
-    }catch(error){
-        console.error('Error en la solicitud:', error);
-        mostrarMensajeAgregar('Error en la solicitud al servidor.', 'error');
-    }
-    
-}
-
+// RUTA POST DEL SERVIDOR
 router.post('/registro', async (req, res) => {
     const { nombre, email, servicio } = req.body;
 
-    console.log('Datos recibidos en /api/registro:', { nombre, email, servicio });
+    console.log('Datos recibidos en /registro:', { nombre, email, servicio });
 
     try {
         const servicioNumero = obtenerNumeroServicio(servicio);
-
         const result = await pool.queryWithParams('CALL uspAddContacto(?, ?, ?)', [nombre, email, servicioNumero]);
 
-        // Dependiendo del driver, el resultado puede variar. Intentamos leer un campo esperado.
         const resultado = (result && result[0] && result[0][0] && result[0][0].resultado) || (result && result[0] && result[0].resultado);
 
         if (resultado === 1) {
@@ -137,7 +94,7 @@ router.post('/registro', async (req, res) => {
             return res.status(409).json({ success: false, message: 'El contacto ya existe en nuestros registros.' });
         }
     } catch (error) {
-        console.error('ERROR en /api/registro:', error);
+        console.error('ERROR en /registro:', error);
         // Fallback: guardar en archivo y enviar correo
         try {
             const registroGuardado = await guardarRegistro({ nombre: req.body.nombre, email: req.body.email, servicio: req.body.servicio });

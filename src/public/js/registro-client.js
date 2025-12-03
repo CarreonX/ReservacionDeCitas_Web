@@ -1,6 +1,6 @@
 async function agregarContacto() {
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
+    const nombre = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('email').value.trim();
     const servicio = document.getElementById('servicio').value;
 
     if( !nombre || !email || !servicio ) {
@@ -9,7 +9,9 @@ async function agregarContacto() {
     }
 
     try{
-        let response= await fetch('http://localhost:8080/addContacto', {
+        console.log('📤 Enviando datos a /registro:', { nombre, email, servicio });
+        
+        let response = await fetch('/registro', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,23 +24,29 @@ async function agregarContacto() {
         });
 
         let data = await response.json();
-        console.log('Respuesta del servidor:', data);
+        console.log('📥 Respuesta del servidor:', data);
 
-        if(response.ok){
-            alert('Contacto agregado correctamente.', 'success');
+        if(response.ok && data.success){
+            mostrarMensajeAgregar(data.message || 'Contacto agregado correctamente.', 'success');
             limpiarFormularioAgregar();
+            // Opcional: redirigir después de 2 segundos
+            // setTimeout(() => { window.location.href = '/'; }, 2000);
         } else {
-            mostrarMensajeAgregar('Error al agregar contacto:', 'error');
+            mostrarMensajeAgregar(data.message || 'Error al agregar contacto.', 'error');
         }
     }catch(error){
-        console.error('Error en la solicitud:', error);
-        mostrarMensajeAgregar('Error en la solicitud al servidor.', 'error');
+        console.error('❌ Error en la solicitud:', error);
+        mostrarMensajeAgregar('Error en la solicitud al servidor. Verifica la consola.', 'error');
     }
 }
 
-
 function mostrarMensajeAgregar(mensaje, tipo) {
     const div = document.getElementById("mensajeResultadoAgregar");
+    if (!div) {
+        console.warn('⚠️ Elemento #mensajeResultadoAgregar no encontrado. Mostrando alert.');
+        alert(mensaje);
+        return;
+    }
     div.textContent = mensaje;
     div.className = 'alert alert-' + (tipo === 'success' ? 'success' : 'error');
     div.classList.remove('display-none');
@@ -47,4 +55,5 @@ function mostrarMensajeAgregar(mensaje, tipo) {
 function limpiarFormularioAgregar() {
     document.getElementById('nombre').value = '';
     document.getElementById('email').value = '';
+    document.getElementById('servicio').value = '';
 }

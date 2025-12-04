@@ -64,10 +64,10 @@ const router = express.Router();
 
 function obtenerNumeroServicio(textoServicio) {
     const servicios = {
-        'Limpieza Dental Profesional': 1,
-        'Ortodoncia y Alineadores': 2,
-        'Estética Dental': 3,
-        'Servicio Personalizado': 4
+        1: 'Limpieza Dental Profesional',
+        2: 'Ortodoncia y Alineadores',
+        3: 'Estética Dental',
+        4: 'Servicio Personalizado'
     };
     const num = parseInt(textoServicio, 10);
     if (!isNaN(num)) return num;

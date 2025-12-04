@@ -15,8 +15,6 @@ function obtenerNumeroServicio(textoServicio) {
         3: 'Estética Dental',
         4: 'Servicio Personalizado'
     };
-    const num = parseInt(textoServicio, 10);
-    if (!isNaN(num)) return num;
     return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
 }
 
@@ -25,10 +23,10 @@ function enviarCorreo(nombre, email, servicio) {
     
     // Mapear servicios a destinatarios
     const destinatarios = {
-        'Limpieza Dental Profesional': 'abelardogeronimo243@gmail.com',
-        'Ortodoncia y Alineadores': 'L22TE0524@teziutlan.tecnm.mx',
-        'Estética Dental': 'carreonalberto22te@outlook.com',
-        'Servicio Personalizado': 'tijeritas.tekla@gmail.com'
+        1: 'abelardogeronimo243@gmail.com',
+        2: 'L22TE0524@teziutlan.tecnm.mx',
+        3: 'carreonalberto22te@outlook.com',
+        4: 'tijeritas.tekla@gmail.com'
     };
 
     servicio = obtenerNumeroServicio( servicio );

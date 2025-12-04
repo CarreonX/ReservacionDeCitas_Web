@@ -27,7 +27,7 @@ async function agregarContacto() {
         console.log('📥 Respuesta del servidor:', data);
 
         if(response.ok && data.success){
-            mostrarMensajeAgregar(data.message || 'Contacto agregado correctamente.', 'success');
+            mostrarMensajeAgregar(data.message || 'Su información ha sido guardada. Nos comunicaremos lo mas pronto con usted!', 'success');
             limpiarFormularioAgregar();
             // Opcional: redirigir después de 2 segundos
             // setTimeout(() => { window.location.href = '/'; }, 2000);

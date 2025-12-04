@@ -44,6 +44,8 @@ app.get('/api/test', (req, res) => {
     });
 });
 
+app.use('/JS', express.static(path.join(__dirname, 'JS')));
+
 app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);
     console.log(`📍 Accesible desde: http://localhost:8080`);

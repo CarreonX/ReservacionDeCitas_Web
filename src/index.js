@@ -32,11 +32,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // CONECTA LAS RUTAS
-const registroRoutes = require('./routes/registro');
-const homeRoutes = require('./routes/home');
+const homeRoutes = require('./routes/home.js');
 
 app.use('/', homeRoutes);
-app.use('/api', registroRoutes);
 
 // ✅ RUTA DE PRUEBA - AGREGAR ESTO
 app.get('/api/test', (req, res) => {

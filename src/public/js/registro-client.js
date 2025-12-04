@@ -11,7 +11,7 @@ async function agregarContacto() {
     try{
         console.log('📤 Enviando datos a /registro:', { nombre, email, servicio });
         
-        let response = await fetch('/registro', {
+        let response = await fetch('/addContacto', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

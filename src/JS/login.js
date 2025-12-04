@@ -24,7 +24,6 @@ async function ingresar() {
 
         if (data.success) {
             alert("Ingreso exitoso ✔");
-
             // Redirigir a panel del médico
             window.location.href = "/dashboardMedico"; 
         } else {

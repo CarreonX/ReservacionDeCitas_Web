@@ -1,22 +1,103 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Menu Medico</title>
+    <title>Dashboard Médico</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../CSS/estiloMenu.css">
     <script type="text/javascript" src="../../JS/medicos.js"></script>
 </head>
 
 <body>
-    <h1>Menu del medico</h1>
+
+    <!-- NAVBAR ORIGINAL, NO MODIFICADO -->
+    <nav class="nav">
+        <div class="nav_container">
+
+            <h1 class="nav_title" id="nombreMedicoNav">Cargando...</h1>
+
+
+            <a href="#menu" class="nav_menu">
+                <img src="../Icons/menu-hamburguesa_bco.png" class="nav_icon" alt="un logo">
+            </a>
+            <a href="#" class="nav_menu nav_menu--second">
+                <img src="../Icons/cruz_bca.png" class=" nav_icon" alt="un logo">
+            </a>
+
+            <ul class="dropDown" id="menu">
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/hogar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Inicio</span>
+                    </a>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/documento-firmado.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Proyectos</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Project 1</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Project 2</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Project 3</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/sobre_vacio.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Contacto</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Contacto 1</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Contacto 2</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Contacto 3</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/interrogatorio.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <section style="padding: 20px;">
+        <h2>Información del Médico</h2>
+
+        <p><strong>Nombre:</strong> <span id="nombre">Cargando...</span></p>
+        <p><strong>Apellido Materno:</strong> <span id="apellidoM">Cargando...</span></p>
+        <p><strong>Apellido Paterno:</strong> <span id="apellidoP">Cargando...</span></p>
+        <p><strong>Correo:</strong> <span id="email">Cargando...</span></p>
+    </section>
+
 </body>
 
 </html>

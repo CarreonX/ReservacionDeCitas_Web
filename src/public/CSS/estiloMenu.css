@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav {
+  background-color: #830248;
+  --img1: scale(1);
+  --img2: scale(0);
+}
+
+.nav:has(.dropDown:target) {
+  --img1: scale(0);
+  --img2: scale(1);
+
+  --clip: inset(0 0 0 0);
+}
+
+.nav_container {
+  width: 90%;
+  margin: 0 auto;
+  height: 70px;
+
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-areas: "title img";
+  justify-content: space-between;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.nav_title {
+  color: #fff;
+  grid-area: title;
+}
+
+.nav_menu {
+  grid-area: img;
+  position: relative;
+  z-index: 10;
+
+  transform: var(--img1);
+}
+
+.nav_menu--second {
+  transform: var(--img2);
+}
+
+.nav_icon {
+  width: 30px;
+  display: block;
+}
+
+.dropDown {
+  position: absolute;
+  background-color: #000;
+  width: 75%;
+  max-width: 300px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 1em;
+
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+
+  overflow-y: auto;
+  clip-path: var(--clip, inset(0 0 100% 100%));
+  transition: clip-path 0.5s;
+}
+
+.dropDown_list {
+  list-style: none;
+}
+
+.dropDown_link {
+  color: rgb(184, 187, 191);
+  padding: 1em 0.7em;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  position: relative;
+  background-color: var(--bg, transparent);
+  border-radius: 6px;
+}
+
+.dropDown_list:has(:checked) {
+  --rows: 1fr;
+  --rotate: rotate(270deg);
+  --bg: #28303b;
+}
+
+.dropDown_check {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropDown_arrow {
+  margin-left: auto;
+  transform: var(--rotate, 0);
+  transition: 0.2s transform;
+}
+
+.dropDown_content {
+  display: grid;
+  grid-template-rows: var(--rows, 0fr);
+  transition: 0.3s grid-template-rows;
+}
+
+.dropDown_sub {
+  overflow: hidden;
+}
+
+.dropDown_li {
+  width: 85%;
+  list-style: none;
+  margin-left: auto;
+}
+
+.dropDown_anchor {
+  padding: 1em 0;
+  display: block;
+  color: #b7babe;
+  text-decoration: none;
+}

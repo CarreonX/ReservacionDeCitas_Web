@@ -17,6 +17,15 @@ async function ingresar() {
                 usuario: usuario,
                 password: password
             })
+        })
+        .then( res => res.json() )
+        .then( data => {
+            if (data.success) {
+                window.location.href = `/dashboardMedico?id_medico=${data.id_medico}`;
+            }
+            else {
+                alert("Credenciales incorrectas ❌");
+            }
         });
 
         const data = await response.json();

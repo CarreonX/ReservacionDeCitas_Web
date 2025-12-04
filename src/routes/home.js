@@ -79,7 +79,8 @@ router.post( '/login', async (req, res) => {
         if (existe >= 1) {
             return res.json({
                 success: true,
-                message: 'Credenciales válidas'
+                message: 'Credenciales válidas',
+                id_medico: existe
             });
         } else {
             return res.status(401).json({
@@ -96,38 +97,33 @@ router.post( '/login', async (req, res) => {
     }
 } );
 
+router.get('/medico/:id', async (req, res) => {
+    const id = req.params.id;
 
-router.get('/dashboardMedico', (req, res) => {
-    try{
-        const { usuario, password } = req.body;
-
-        const result = DBConnector.queryWithParams(
-            'CALL uspGetPKMedico(?, ?)',
-            [usuario, password]
+    try {
+        const result = await DBConnector.queryWithParams(
+            'CALL uspGetMedico(?)',
+            [id]
         );
-        const pkMedico = result[0][0]['id_medico'];
 
-        if( pkMedico >= 1){
-            res.json({
-                success: true,
-                message: 'Acceso concedido',
-                pkMedico: pkMedico
-            });
-        }
-        else{
-            res.status(401).json({
-                success: false,
-                message: 'Acceso denegado'
-            });
-        }
-    }
-    catch(err){
-        console.error('❌ Error en /dashboardMedico:', err);
+        const medico = result[0][0];
+
+        return res.json({
+            success: true,
+            medico
+        });
+
+    } catch (err) {
+        console.error("Error en /medico:", err);
         return res.status(500).json({
             success: false,
-            message: 'Error al procesar la solicitud.'
+            message: "Error al obtener información del médico"
         });
     }
+});
+
+router.get('/dashboardMedico', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/Html', 'dashboardMedico.html'));
 });
 
 module.exports = router;

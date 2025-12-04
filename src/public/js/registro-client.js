@@ -19,7 +19,7 @@ async function agregarContacto() {
             body: JSON.stringify({
                 nombre: nombre,
                 email: email,
-                servicio: servicio
+                servicio: parseInt( servicio )
             })
         });
 

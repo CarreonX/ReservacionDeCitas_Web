@@ -28,9 +28,10 @@ function enviarCorreo(nombre, email, servicio) {
         3: 'carreonalberto22te@outlook.com',
         4: 'tijeritas.tekla@gmail.com'
     };
-    
-    destino = destinatarios[servicio] || destino;
 
+    destino = destinatarios[servicio] || destino;
+    servicio = obtenerNumeroServicio(servicio);
+    
     const mailOptions = {
         from: "puntoycoma519@gmail.com",
         to: destino, 

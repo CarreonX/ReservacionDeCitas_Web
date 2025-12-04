@@ -34,7 +34,7 @@ router.post('/addContacto', async (req, res) => {
         if (resultado !== 1) {
             return res.status(409).json({
                 success: false,
-                message: 'Este contacto ya existe.'
+                message: 'Este contacto ya existe. Nos comunicaremos con usted pronto!'
             });
         }
 
@@ -48,7 +48,7 @@ router.post('/addContacto', async (req, res) => {
         // 3️⃣ RESPUESTA FINAL AL CLIENTE
         return res.json({
             success: true,
-            message: 'Contacto registrado y correo enviado correctamente.'
+            message: 'Contacto registrado nos comunicaremos con usted pronto!'
         });
 
     } catch (err) {
@@ -60,8 +60,44 @@ router.post('/addContacto', async (req, res) => {
     }
 });
 
-router.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/Html', 'login.html'));
+router.post( '/login', async (req, res) => {
+
+    try {
+        const { username, password } = req.body;
+
+        console.log("🔐 Intento de login:", req.body)
+        
+        const result = await DBConnector.queryWithParams(
+            'CALL uspValidarMedico(?, ?)',
+            [username, password]
+        );
+
+        console.log("Login result:", result);
+
+        const existe = result[0][0]['COUNT(*)'];
+
+        if (existe == 1) {
+            return res.json({
+                success: true,
+                message: 'Credenciales válidas'
+            });
+        } else {
+            return res.status(401).json({
+                success: false,
+                message: 'Credenciales no válidas'
+            });
+        }
+    } catch (err) {
+        console.error('❌ Error en /login:', err);
+        return res.status(500).json({
+            success: false,
+            message: 'Error al procesar el login.'
+        });
+    }
+} );
+
+router.get('/dashboardMedico', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/Html', 'dashboardMedico.html'));
 });
 
 module.exports = router;

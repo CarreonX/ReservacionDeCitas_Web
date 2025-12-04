@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         // 2. Hacer petición al backend para obtener los datos del médico
-        const response = await fetch(`/api/medico/${id_medico}`);
+        const response = await fetch(`/medico/${id_medico}`);
         const data = await response.json();
 
         if (!data.success) {

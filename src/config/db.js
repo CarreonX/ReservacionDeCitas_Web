@@ -2,7 +2,7 @@ const mariadb = require('mariadb');
 
 const poolConfig = {
     host: '127.0.0.1',          // ← usar 127.0.0.1 en lugar de 'localhost' (::1)
-    user: 'remoto',
+    user: 'root',
     password: 'Ztklwxc14348',
     database: 'dbClinica_Dental',
     connectionLimit: 10,        // aumentar si es necesario

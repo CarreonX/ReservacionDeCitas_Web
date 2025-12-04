@@ -1,7 +1,7 @@
 async function agregarContacto() {
     const nombre = document.getElementById('nombre').value.trim();
     const email = document.getElementById('email').value.trim();
-    const servicio = document.getElementById('servicio').value;
+    const servicio = parseInt( document.getElementById('servicio').value );
 
     if( !nombre || !email || !servicio ) {
         mostrarMensajeAgregar('Por favor, completa todos los campos.', 'error');

@@ -76,6 +76,7 @@ function obtenerNumeroServicio(textoServicio) {
 
 // RUTA POST DEL SERVIDOR
 router.post('/registro', async (req, res) => {
+    
     const { nombre, email, servicio } = req.body;
 
     console.log('Datos recibidos en /registro:', { nombre, email, servicio });

@@ -73,7 +73,7 @@ function obtenerNumeroServicio(textoServicio) {
     if (!isNaN(num)) return num;
     return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
 }
-
+/*
 // RUTA POST DEL SERVIDOR
 router.post('/registro', async (req, res) => {
     
@@ -106,6 +106,6 @@ router.post('/registro', async (req, res) => {
             return res.status(500).json({ success: false, message: 'Error en el servidor' });
         }
     }
-});
+});*/
 
 module.exports = router;

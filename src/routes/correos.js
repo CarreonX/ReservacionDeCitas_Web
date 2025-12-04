@@ -8,6 +8,18 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+function obtenerNumeroServicio(textoServicio) {
+    const servicios = {
+        1: 'Limpieza Dental Profesional',
+        2: 'Ortodoncia y Alineadores',
+        3: 'Estética Dental',
+        4: 'Servicio Personalizado'
+    };
+    const num = parseInt(textoServicio, 10);
+    if (!isNaN(num)) return num;
+    return servicios[textoServicio] !== undefined ? servicios[textoServicio] : 4;
+}
+
 function enviarCorreo(nombre, email, servicio) {
     let destino = 'carreonalberto920@gmail.com'; // default
     
@@ -19,6 +31,7 @@ function enviarCorreo(nombre, email, servicio) {
         'Servicio Personalizado': 'tijeritas.tekla@gmail.com'
     };
 
+    servicio = obtenerNumeroServicio( servicio );
     destino = destinatarios[servicio] || destino;
 
     const mailOptions = {
@@ -34,7 +47,7 @@ function enviarCorreo(nombre, email, servicio) {
 
 // Alias para mantener compatibilidad
 function enviarCorreoRegistro(datos) {
-    return enviarCorreo(datos.nombre, datos.email, datos.servicio);
+    return enviarCorreo(datos.nombre, datos.email, obtenerNumeroServicio( datos.servicio ));
 }
 
 module.exports = { 

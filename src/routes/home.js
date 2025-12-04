@@ -63,13 +63,13 @@ router.post('/addContacto', async (req, res) => {
 router.post( '/login', async (req, res) => {
 
     try {
-        const { username, password } = req.body;
+        const { usuario, password } = req.body;
 
         console.log("🔐 Intento de login:", req.body)
         
         const result = await DBConnector.queryWithParams(
             'CALL uspValidarMedico(?, ?)',
-            [username, password]
+            [usuario, password]
         );
 
         console.log("Login result:", result);

@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', async function () {
 
+    const id_medico = localStorage.getItem("id_medico");
+
+    if (!id_medico) {
+        console.error("❌ No existe id_medico en localStorage");
+        return;
+    }
+
+    console.log("📌 ID del médico cargado:", id_medico);
+
     const response = await fetch(`/getCitasMedico/${id_medico}`);
     const data = await response.json();
 

@@ -59,7 +59,7 @@ body {
 
 .dropDown {
   position: absolute;
-  background-color: #000;
+  background-color: #0889d4;
   width: 75%;
   max-width: 300px;
   right: 0;
@@ -81,7 +81,7 @@ body {
 }
 
 .dropDown_link {
-  color: rgb(184, 187, 191);
+  color: #fff;
   padding: 1em 0.7em;
   text-decoration: none;
 
@@ -97,7 +97,7 @@ body {
 .dropDown_list:has(:checked) {
   --rows: 1fr;
   --rotate: rotate(270deg);
-  --bg: #28303b;
+  --bg: #0a49a2;
 }
 
 .dropDown_check {
@@ -133,7 +133,7 @@ body {
 .dropDown_anchor {
   padding: 1em 0;
   display: block;
-  color: #b7babe;
+  color: #fff;
   text-decoration: none;
 }
 

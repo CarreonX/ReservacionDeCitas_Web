@@ -21,6 +21,7 @@ async function ingresar() {
         .then( res => res.json() )
         .then( data => {
             if (data.success) {
+                localStorage.setItem("id_medico", data.id_medico);
                 window.location.href = `/dashboardMedico?id_medico=${data.id_medico}`; //Aqui
             }
             else {

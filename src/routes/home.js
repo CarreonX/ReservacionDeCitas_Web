@@ -126,4 +126,44 @@ router.get('/dashboardMedico', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/Html', 'dashboardMedico.html'));
 });
 
+router.get('/getCitasMedico/:id_medico', async (req, res) => {
+    try {
+        const { id_medico } = req.params;
+
+        console.log("📅 Solicitando citas del médico:", id_medico);
+
+        const result = await DBConnector.queryWithParams(
+            "CALL uspGetCitasPorMedico(?)",
+            [id_medico]
+        );
+
+        // FULLCALENDAR NECESITA un arreglo plano de objetos
+        const citas = result[0].map(c => ({
+            id: c.idx,
+            title: c.motivoDeCita, 
+            start: new Date( c.fechaCita ), 
+            end: new Date( c.fechaCita ),
+            timeStart: c.hora,
+            extendedProps: {
+                estado: c.estado,
+                duracion: c.duracion,
+                paciente: c.nombrePaciente, //generar ruta que retorne en nombre del paciente
+                nota: c.nota
+            }
+        }));
+
+        return res.json({
+            success: true,
+            citas
+        });
+
+    } catch (error) {
+        console.error("❌ Error en /getCitasMedico:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error al obtener citas."
+        });
+    }
+});
+
 module.exports = router;

@@ -1,6 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
 
-    let request_calendar = './Html/pruebas.json'; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
+    const response = await fetch(`/getCitasMedico/${id_medico}`);
+    const data = await response.json();
+
+    if (!data.success) {
+        console.error("❌ No se pudieron cargar las citas");
+        return;
+    }
+
+    console.log("📅 Citas recibidas:", data.citas);
+
+    let request_calendar = data.citas; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
 
 
                 var calendarEl = document.getElementById('calendar');
@@ -58,39 +68,71 @@ document.addEventListener('DOMContentLoaded', function () {
                                 `
                         }
                     },
-                    eventMouseEnter: function( mouseEnterInfo ){
-                        let el = mouseEnterInfo.el;
-                        el.classList.add('relative')
+                    eventMouseEnter: function (info) {
+                        const el = info.el;
+                        const rect = el.getBoundingClientRect();
 
-                        let newEl = document.createElement('div');
-                        let newElTitle = mouseEnterInfo.event.title;
-                        let newElLocation = mouseEnterInfo.event.extendedProps.location;
-                        newEl.innerHTML =
-                            `
-                            <div class="fc-hoverable-event" style="position:absolute; bottom:100%; left:0; width: 300px; height:auto;
-                                background-color: white; z-index: 50; border: 1px solid #e2e8f0; border-radius: 0.375rem;
-                                padding: 0.75rem; font-size: 14px; font-family: 'Inter', sans-serif; cursor:pointer;">
+                        // Crear tooltip
+                        const tooltip = document.createElement("div");
+                        tooltip.classList.add("fc-tooltip");
+                        tooltip.style.position = "fixed";
+                        tooltip.style.zIndex = "9999";
+                        tooltip.style.width = "260px";
+                        tooltip.style.padding = "12px";
+                        tooltip.style.background = "white";
+                        tooltip.style.border = "1px solid #e2e8f0";
+                        tooltip.style.borderRadius = "8px";
+                        tooltip.style.fontSize = "14px";
+                        tooltip.style.fontFamily = "Inter, sans-serif";
+                        tooltip.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)";
 
-                                <strong>${newElTitle}</strong>
-                                <div>Location: ${newElLocation}</div>
-                                <div>Date: ${mouseEnterInfo.event.start.toLocaleDateString(
-                                    "es-MX",
-                                    {
-                                        month: "long",
-                                        day: "numeric",
-                                        year: "numeric"
-                                    }
-                                )}</div>
-                                <div>Time: ${mouseEnterInfo.event.extendedProps.horaCita}</div>
-                            </div>
-                            `
-                            el.after( newEl );
+                        tooltip.innerHTML = `
+                            <strong>${info.event.title}</strong><br>
+                            <div><strong>Location:</strong> ${info.event.extendedProps.location}</div>
+                            <div><strong>Date:</strong> ${info.event.start.toLocaleDateString("es-MX", {
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric"
+                            })}</div>
+                            <div><strong>Time:</strong> ${info.event.extendedProps.timeStart}</div>
+                        `;
+
+                        document.body.appendChild(tooltip);
+
+                        // ---- Posicionamiento inteligente ----
+                        const tooltipRect = tooltip.getBoundingClientRect();
+
+                        let top = rect.top - tooltipRect.height - 10; // por arriba del dia
+                        let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+
+                        // Si se sale por arriba → ponlo abajo
+                        if (top < 0) {
+                            top = rect.bottom + 10;
+                        }
+
+                        // Ajustar si se sale por izquierda
+                        if (left < 0) {
+                            left = 5;
+                        }
+
+                        // Ajustar si se sale por derecha
+                        if (left + tooltipRect.width > window.innerWidth) {
+                            left = window.innerWidth - tooltipRect.width - 5;
+                        }
+
+                        tooltip.style.top = `${top}px`;
+                        tooltip.style.left = `${left}px`;
+
+                        // Guardar referencia para eliminarlo después
+                        info.el.tooltipElement = tooltip;
                     },
 
-                    eventMouseLeave: function( mouseLeaveInfo ){
-                        let el = document.querySelector('.fc-hoverable-event');
-                        el.remove();
-                    }
+                    eventMouseLeave: function (info) {
+                        if (info.el.tooltipElement) {
+                            info.el.tooltipElement.remove();
+                            info.el.tooltipElement = null;
+                        }
+                    },
                 });
                 calendar.render();
             });

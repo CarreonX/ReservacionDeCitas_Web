@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    let request_calendar = './Html/pruebas.json'; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
+    let request_calendar = './Htmlpruebas.json'; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
 
 
                 var calendarEl = document.getElementById('calendar');

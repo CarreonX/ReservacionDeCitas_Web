@@ -9,7 +9,7 @@ body {
 }
 
 .nav {
-  background-color: #830248;
+  background-color: #0889d4;
   --img1: scale(1);
   --img2: scale(0);
 }
@@ -135,4 +135,76 @@ body {
   display: block;
   color: #b7babe;
   text-decoration: none;
+}
+
+/*Estilos para fullcalendar*/
+.fc-col-header-cell {
+  background-color: #0889d4 !important;
+  color: white !important;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Bordes generales del calendario */
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: #75c5f1 !important;
+}
+
+/* Números del calendario (días) */
+.fc-daygrid-day-number {
+  color: #0369a1;
+  font-weight: bold;
+}
+
+/* Hover sobre días */
+.fc-daygrid-day:hover {
+  background-color: #e0f2ff;
+}
+
+/* Eventos dentro del calendario */
+.fc-event {
+  background-color: #0889d4 !important;
+  border: 1px solid #066aa8 !important;
+  color: white !important;
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 12px;
+  transition: 0.2s ease-in-out;
+}
+
+/* Hover en eventos */
+.fc-event:hover {
+  background-color: #0a9cf6 !important;
+  transform: scale(1.02);
+}
+
+/* Tooltip personalizado (tu hover) */
+.fc-hoverable-event {
+  border-color: #0889d4 !important;
+}
+
+.fc-hoverable-event strong {
+  color: #0889d4;
+}
+
+/* Botones de navegación del calendario */
+.fc .fc-button-primary {
+  background-color: #0889d4 !important;
+  border-color: #066aa8 !important;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #0a9cf6 !important;
+}
+
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: #066aa8 !important;
+}
+
+/* Hoy destacado */
+.fc-daygrid-day.fc-day-today {
+  background-color: #dff1ff !important;
+  border: 1px solid #0889d4 !important;
 }

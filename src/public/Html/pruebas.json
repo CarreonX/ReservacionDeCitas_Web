@@ -1,0 +1,94 @@
+{
+  "events": [
+  {
+    "eventTitle": "Reunión inicial del equipo",
+    "eventStartDate": "12/02/2025",
+    "eventEndDate": "12/02/2025",
+    "eventStartTime": "09:00 AM",
+    "eventEndTime": "10:00 AM",
+    "eventLocation": "Sala de conferencias A",
+    "eventUrl": "https://example.com/reunion-inicial"
+  },
+  {
+    "eventTitle": "Planificación de diciembre",
+    "eventStartDate": "12/05/2025",
+    "eventEndDate": "12/05/2025",
+    "eventStartTime": "11:00 AM",
+    "eventEndTime": "12:30 PM",
+    "eventLocation": "Oficina principal",
+    "eventUrl": "https://example.com/planificacion-diciembre"
+  },
+  {
+    "eventTitle": "Taller de innovación tecnológica",
+    "eventStartDate": "12/08/2025",
+    "eventEndDate": "12/08/2025",
+    "eventStartTime": "02:00 PM",
+    "eventEndTime": "05:00 PM",
+    "eventLocation": "Centro de innovación",
+    "eventUrl": "https://example.com/taller-innovacion"
+  },
+  {
+    "eventTitle": "Presentación de resultados Q4",
+    "eventStartDate": "12/12/2025",
+    "eventEndDate": "12/12/2025",
+    "eventStartTime": "10:00 AM",
+    "eventEndTime": "12:00 PM",
+    "eventLocation": "Auditorio principal",
+    "eventUrl": "https://example.com/presentacion-q4"
+  },
+  {
+    "eventTitle": "Fiesta navideña de la empresa",
+    "eventStartDate": "12/15/2025",
+    "eventEndDate": "12/15/2025",
+    "eventStartTime": "06:00 PM",
+    "eventEndTime": "10:00 PM",
+    "eventLocation": "Hotel Grand Palace",
+    "eventUrl": "https://example.com/fiesta-navidena"
+  },
+  {
+    "eventTitle": "Revisión de proyectos finales",
+    "eventStartDate": "12/18/2025",
+    "eventEndDate": "12/18/2025",
+    "eventStartTime": "09:00 AM",
+    "eventEndTime": "11:00 AM",
+    "eventLocation": "Sala de juntas B",
+    "eventUrl": "https://example.com/revision-proyectos"
+  },
+  {
+    "eventTitle": "Capacitación de fin de año",
+    "eventStartDate": "12/20/2025",
+    "eventEndDate": "12/20/2025",
+    "eventStartTime": "09:00 AM",
+    "eventEndTime": "01:00 PM",
+    "eventLocation": "Centro de capacitación",
+    "eventUrl": "https://example.com/capacitacion-fin-ano"
+  },
+  {
+    "eventTitle": "Cierre administrativo 2025",
+    "eventStartDate": "12/23/2025",
+    "eventEndDate": "12/23/2025",
+    "eventStartTime": "08:30 AM",
+    "eventEndTime": "04:00 PM",
+    "eventLocation": "Departamento de finanzas",
+    "eventUrl": "https://example.com/cierre-administrativo"
+  },
+  {
+    "eventTitle": "Reunión virtual de balance",
+    "eventStartDate": "12/28/2025",
+    "eventEndDate": "12/28/2025",
+    "eventStartTime": "10:00 AM",
+    "eventEndTime": "11:30 AM",
+    "eventLocation": "Zoom Meeting",
+    "eventUrl": "https://example.com/balance-2025"
+  },
+  {
+    "eventTitle": "Planificación 2026",
+    "eventStartDate": "12/30/2025",
+    "eventEndDate": "12/30/2025",
+    "eventStartTime": "09:00 AM",
+    "eventEndTime": "03:00 PM",
+    "eventLocation": "Sala de estrategias",
+    "eventUrl": "https://example.com/planificacion-2026"
+  }
+]
+}

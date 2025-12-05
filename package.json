@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "fullcalendar": "^6.1.19",
     "mariadb": "^3.4.5",
     "morgan": "^1.10.1",
     "nodemailer": "^7.0.10",

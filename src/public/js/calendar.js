@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                 <strong>${newElTitle}</strong>
                                 <div>Location: ${newElLocation}</div>
-                                <div>Date: ${mouseEnterInfo.event.start.toLocalDateString(
+                                <div>Date: ${mouseEnterInfo.event.start.toLocaleDateString(
                                     "es-MX",
                                     {
                                         month: "long",

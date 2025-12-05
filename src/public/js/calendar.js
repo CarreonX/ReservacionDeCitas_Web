@@ -34,8 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <div>ID: ${info.event.id}</div>
                     <div>Time: ${info.event.extendedProps.timeStart}</div>
                     <div>Duración: ${info.event.extendedProps.duracion}</div>
-                    <div>Paciente ID: ${info.event.extendedProps.paciente}</div>
-                    <div>Nota: ${info.extendedProps.nota}</div>
+                    <div>Nota: ${info.event.extendedProps.nota}</div>
                 </div>`
             }
         },
@@ -56,11 +55,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             tooltip.innerHTML = `
                 <div><strong>${info.event.title}</strong></div>
-                    <div>ID: ${info.event.id}</div>
-                    <div>Time: ${info.event.extendedProps.timeStart}</div>
-                    <div>Duración: ${info.event.extendedProps.duracion}</div>
-                    <div>Paciente ID: ${info.event.extendedProps.paciente}</div>
-                    <div>Nota: ${info.extendedProps.nota}</div>
+                <div>ID: ${info.event.id}</div>
+                <div>Time: ${info.event.extendedProps.timeStart}</div>
+                <div>Duración: ${info.event.extendedProps.duracion}</div>
+                <div>Nota: ${info.event.extendedProps.nota}</div>
             `;
 
             document.body.appendChild(tooltip);

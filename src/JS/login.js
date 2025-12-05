@@ -21,7 +21,7 @@ async function ingresar() {
         .then( res => res.json() )
         .then( data => {
             if (data.success) {
-                window.location.href = `/dashboardMedico?id_medico=${data.id_medico}`;
+                window.location.href = `/dashboardMedico?id_medico=${data.id_medico}`; //Aqui
             }
             else {
                 alert("Credenciales incorrectas ❌");
@@ -34,7 +34,7 @@ async function ingresar() {
         if (data.success) {
             alert("Ingreso exitoso ✔");
             // Redirigir a panel del médico
-            window.location.href = "/dashboardMedico"; 
+            window.location.href = `/dashboardMedico`; 
         } else {
             alert("Credenciales incorrectas ❌");
         }

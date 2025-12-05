@@ -29,13 +29,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                                 let events = data.citas.map( function( event ){
                                     return {
                                         //En esta parte de seben de mapear los datos de las citas que obtuvimos en el json anterior
-                                        title: event.eventTitle, 
-                                        start: new Date( event.eventStartDate ), //para establecer fechas en calendario
-                                        end: new Date( event.eventEndDate ), //para establecer fechas en calendario
-                                        timeStart: event.eventStartTime,
-                                        location: event.eventLocation,
-                                        timeEnd: event.eventEndTime,
-                                        url: event.eventURL
+                                        id: event.idx,
+                                        title: event.motivoDeCita, 
+                                        start: event.fechaCita, //para establecer fechas en calendario
+                                        end: event.fechaCita, //para establecer fechas en calendario
+                                        timeStart: event.hora,
+                                        extendedProps: {
+                                            estado: event.estado,
+                                            duracion: event.duracion,
+                                            paciente: event.idPaciente,
+                                            nota: event.nota,
+                                        }
                                     }
                                 })
                                 console.log("Eventos procesados:", events);

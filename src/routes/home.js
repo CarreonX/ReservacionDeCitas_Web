@@ -147,7 +147,7 @@ router.get('/getCitasMedico/:id_medico', async (req, res) => {
             extendedProps: {
                 estado: c.estado,
                 duracion: c.duracion,
-                paciente: c.nombrePaciente, //generar ruta que retorne en nombre del paciente
+                paciente: c.idPaciente, //generar ruta que retorne en nombre del paciente
                 nota: c.nota
             }
         }));

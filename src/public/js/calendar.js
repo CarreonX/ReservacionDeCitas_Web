@@ -31,7 +31,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 html: `
                 <div style="overflow: hidden;">
                     <div><strong>${info.event.title}</strong></div>
+                    <div>ID: ${info.event.id}</div>
                     <div>Time: ${info.event.extendedProps.timeStart}</div>
+                    <div>Duración: ${info.event.extendedProps.duracion}</div>
+                    <div>Paciente ID: ${info.event.extendedProps.paciente}</div>
+                    <div>Nota: ${info.extendedProps.nota}</div>
                 </div>`
             }
         },
@@ -51,8 +55,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             tooltip.style.borderRadius = "6px";
 
             tooltip.innerHTML = `
-                <strong>${info.event.title}</strong><br>
-                <div><strong>Hora:</strong> ${info.event.extendedProps.timeStart}</div>
+                <div><strong>${info.event.title}</strong></div>
+                    <div>ID: ${info.event.id}</div>
+                    <div>Time: ${info.event.extendedProps.timeStart}</div>
+                    <div>Duración: ${info.event.extendedProps.duracion}</div>
+                    <div>Paciente ID: ${info.event.extendedProps.paciente}</div>
+                    <div>Nota: ${info.extendedProps.nota}</div>
             `;
 
             document.body.appendChild(tooltip);

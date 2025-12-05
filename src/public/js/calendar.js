@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     console.log("📅 Citas recibidas:", data.citas);
 
-    let request_calendar = data.citas; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
+    let request_calendar = data; //Aqui se debe llamar a la logica para obtener el json de las citas del medico mediante su id_medico
 
 
                 var calendarEl = document.getElementById('calendar');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                             } )
                             .then( function( data ){
                                 console.log("Datos de citas recibidos:", data);
-                                let events = data.events.map( function( event ){
+                                let events = data.citas.map( function( event ){
                                     return {
                                         //En esta parte de seben de mapear los datos de las citas que obtuvimos en el json anterior
                                         title: event.eventTitle, 

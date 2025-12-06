@@ -79,7 +79,7 @@ router.post( '/login', async (req, res) => {
         const existe = result[0][0]['id_medico'];
 
         if (existe >= 1) {
-            return res.json({
+            return res.status(200).json({
                 success: true,
                 message: 'Credenciales válidas',
                 id_medico: existe

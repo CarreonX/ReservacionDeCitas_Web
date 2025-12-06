@@ -6,6 +6,8 @@ const router = express.Router();
 // 👉 Importamos la función de enviar correos
 const { enviarCorreo } = require('./correos.js');
 
+
+
 // RUTA PRINCIPAL
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
@@ -96,6 +98,11 @@ router.post( '/login', async (req, res) => {
         });
     }
 } );
+
+app.use((req, res, next) => {
+    res.locals.idMedico = req.params.id_medico || null;
+    next();
+});
 
 router.get('/medico/:id', async (req, res) => {
     const id = req.params.id;

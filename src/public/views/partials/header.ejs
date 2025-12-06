@@ -15,7 +15,7 @@
 <body>
     <script>
         app.use((req, res, next) => {
-            res.locals.idMedico = req.params.id_medico || null;
+            res.locals.idMedico = req.params?.id_medico || null;
             next();
         });
     </script>

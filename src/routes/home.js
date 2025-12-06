@@ -223,6 +223,11 @@ router.post('/registrarCita', async (req, res) => {
     return res.status(500).send("Error al registrar la cita");
   }
 });
+
+router.get('/registrarPaciente/:id_medico', async (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/Html', 'registrarPaciente.html'));
+});
+
 router.post('/registrarPaciente', async (req, res) => {
   try {
     const {

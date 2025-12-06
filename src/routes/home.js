@@ -2,12 +2,11 @@ const DBConnector = require('../config/db.js');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { registrarPaciente } = require("../controllers/pacientes.controller");
+
 
 // 👉 Importamos la función de enviar correos
 const { enviarCorreo } = require('./correos.js');
 
-router.post("/registrar", registrarPaciente);
 
 // RUTA PRINCIPAL
 router.get('/', (req, res) => {

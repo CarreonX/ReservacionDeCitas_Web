@@ -13,6 +13,12 @@
 </head>
 
 <body>
+    <!-- <script>
+        app.use((req, res, next) => {
+            res.locals.idMedico = req.params.id_medico || null;
+            next();
+        });
+    </script>-->
     <!-- NAVBAR ORIGINAL, NO MODIFICADO -->
     <nav class="nav">
         <div class="nav_container">
@@ -30,7 +36,7 @@
             <ul class="dropDown" id="menu">
 
                 <li class="dropDown_list">
-                    <a href="../../Html/dashboardMedico.html/?idMedico=<%= idMedico %>" class="dropDown_link">
+                    <a href="/dashboard/<%= idMedico %>" class="dropDown_link">
                         <img src="../../Icons/hogar.png" class="dropDown_icon" alt="un logo">
                         <span class="dropDown_span">Inicio</span>
                     </a>
@@ -109,6 +115,3 @@
             </ul>
         </div>
     </nav>
-
-
-    <!-- Solo falta cerrar el body en todas las paginas que la utilicen-->

@@ -1,0 +1,23 @@
+<%- include( 'partials/header' ); %>
+
+
+<section style="padding: 20px;">
+    <h2>Información del Médico</h2>
+
+    <p><strong>Nombre:</strong> <span id="nombre">Cargando...</span></p>
+    <p><strong>Apellido Materno:</strong> <span id="apellidoM">Cargando...</span></p>
+    <p><strong>Apellido Paterno:</strong> <span id="apellidoP">Cargando...</span></p>
+    <p><strong>Correo:</strong> <span id="email">Cargando...</span></p>
+</section>
+
+<section>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+
+    <h1>Calendario</h1>
+    <div lang="es" id="calendar" style="max-width: 900px; margin: 0 auto;">
+
+    </div>
+    <script type="text/javascript" src="../js/calendar.js"></script>
+</section>
+
+<%- include( 'partials/footer' ); %>

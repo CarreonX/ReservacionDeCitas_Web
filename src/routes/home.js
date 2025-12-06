@@ -124,8 +124,8 @@ router.get('/medico/:id', async (req, res) => {
     }
 });
 
-router.get('/dashboardMedico', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/Html', 'dashboardMedico.html'));
+router.get('/dashboardMedico/:id_medico', (req, res) => {
+    res.render('dashboardMedico', { idMedico: req.params.id_medico });
 });
 
 router.get('/getCitasMedico/:id_medico', async (req, res) => {

@@ -133,9 +133,6 @@
     </section>
 
     <script>
-        function getIdMedico() {
-            return window.location.pathname.split("/").pop();
-        }
         document.addEventListener("DOMContentLoaded", () => {
             const id = getIdMedico();
             document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;

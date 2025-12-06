@@ -1,13 +1,12 @@
 async function registrarCita(){
-    const duracion = document.getElementsByName("duracion").value.trim();
-    const estado = document.getElementsByName("estado").value.trim();
-    const fechaCita = document.getElementsByName("fechaCita").value.trim();
-    const fechaGeneracion = document.getElementsByName("fechaGeneracion").value.trim();
-    const hora = document.getElementsByName("hora").value.trim();
-    const idMedico = localStorage.getItem("idmedico").value.trim();
-    const idPaciente = document.getElementsByName("idPaciente").value.trim();
-    const motivoDeCita = document.getElementsByName("motivoDeCita").value.trim();
-    const nota = document.getElementsByName("nota").value.trim();
+    const duracion = document.getElementsByName("duracion")[0].value.trim();
+    const estado = document.getElementsByName("estado")[0].value.trim();
+    const fechaCita = document.getElementsByName("fechaCita")[0].value.trim();
+    const hora = document.getElementsByName("hora")[0].value.trim();
+    const idMedico = localStorage.getItem("idmedico");
+    const idPaciente = document.getElementsByName("idPaciente")[0].value.trim();
+    const motivoDeCita = document.getElementsByName("motivoDeCita")[0].value.trim();
+    const nota = document.getElementsByName("nota")[0].value.trim();
 
     try{
         const response = await fetch("/registrarCita", {
@@ -19,25 +18,23 @@ async function registrarCita(){
                 duracion,
                 estado,
                 fechaCita,
-                fechaGeneracion,
+                fechaGeneracion: null,
                 hora,
                 idMedico,
                 idPaciente,
                 motivoDeCita,
                 nota
             })
-        })
-        .then( res => res.json() )
-        .then( data => {
-            if (data.success) {
-                alert("Cita registrada exitosamente ✔");
-                window.location.href = `/dashboardMedico/${idMedico}`;
-            }
-            else {
-                alert("Error al registrar la cita ❌");
-            }
         });
-        
+        const data = await res.json();
+
+        if (data.success) {
+            alert("Cita registrada exitosamente ✔");
+            window.location.href = `/dashboardMedico/${idMedico}`;
+        } else {
+            alert("Error al registrar la cita ❌");
+        }
+
     } catch (error) {
         console.error("Error al registrar la cita:", error);
         alert("Error con el servidor");

@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="../CSS/estiloMenu.css">
     <script type="text/javascript" src="../../JS/medicos.js"></script>
     <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
+    <script>
+        const id = window.location.pathname.split("/").pop();
+        localStorage.setItem("idmedico", id);
+        document.getElementById("idMedico").value = id;
+    </script>
 </head>
 
 <body>

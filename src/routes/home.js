@@ -166,4 +166,50 @@ router.get('/getCitasMedico/:id_medico', async (req, res) => {
     }
 });
 
+router.get('/actualizarCita/:id', async (req, res) => {
+    res.render('actualizarCita', { idMedico: req.params });
+});
+
+router.get('/registrarCita/:id_medico', async (req, res) => {
+    const id_medico = req.params.id_medico;
+    res.render('registrarCita', { idMedico: id_medico });
+});
+
+router.post('/registrarCita', async (req, res) => {
+    try {
+        const {
+            duracion,
+            estado,
+            fechaCita,
+            fechaGeneracion,
+            hora,
+            idMedico,
+            idPaciente,
+            motivoDeCita,
+            nota
+        } = req.body;
+
+        await DBConnector.queryWithParams(
+            "CALL uspRegistrarCita(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+                duracion,
+                estado,
+                fechaCita,
+                fechaGeneracion,
+                hora,
+                idMedico,
+                idPaciente,
+                motivoDeCita,
+                nota
+            ]
+        );
+
+        res.redirect(`/dashboardMedico/${idMedico}`);
+
+    } catch (error) {
+        console.error("❌ Error al registrar cita:", error);
+        res.status(500).send("Error al registrar la cita");
+    }
+});
+
 module.exports = router;

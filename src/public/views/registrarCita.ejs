@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+<div class="contenedor_form">
+    <h2>Registrar Nueva Cita</h2>
+
+    <form action="/registrarCita" method="POST">
+
+        <!-- ID MÉDICO (no editable pero visible) -->
+        <label>ID Médico</label>
+        <input type="text" name="idMedico" value="<%= idMedico %>" readonly>
+
+        <label>ID Paciente</label>
+        <input type="number" name="idPaciente" required>
+
+        <label>Motivo de la Cita</label>
+        <input type="text" name="motivoDeCita" required>
+
+        <label>Duración (minutos)</label>
+        <input type="number" name="duracion" required>
+
+        <label>Estado</label>
+        <select name="estado" required>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+
+        <label>Fecha de la Cita</label>
+        <input type="date" name="fechaCita" required>
+
+        <label>Hora</label>
+        <input type="time" name="hora" required>
+
+        <!-- Autogenerado -->
+        <label>Fecha de Generación</label>
+        <input type="date" name="fechaGeneracion" value="<%= new Date().toISOString().split('T')[0] %>" readonly>
+
+        <label>Nota</label>
+        <textarea name="nota"></textarea>
+
+        <button type="submit">Registrar Cita</button>
+    </form>
+</div>
+
+<%- include('partials/footer') %>

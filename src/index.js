@@ -1,9 +1,12 @@
 const express = require('express');
-const morgan = require('morgan');
+const morgan = require('morgan'); 
 const path = require('path');
 const cors = require('cors'); // ✅ AGREGAR ESTO
 
 const app = express();
+
+//Configuracion de plantillas EJS
+app.set('views', path.join(__dirname, 'views'));
 
 app.use((req, res, next) => {
     if (req.hostname === 'www.carreon.com' || req.hostname === 'carreon.com') {
@@ -45,6 +48,11 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/JS', express.static(path.join(__dirname, 'JS')));
+
+app.use((req, res, next) => {
+    res.locals.idMedico = req.params.id_medico || null;
+    next();
+});
 
 app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);

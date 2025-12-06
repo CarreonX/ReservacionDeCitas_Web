@@ -31,14 +31,14 @@
             <ul class="dropDown" id="menu">
 
                 <li class="dropDown_list">
-                    <a href="/dashboardMedico/<%= idMedico%>" class="dropDown_link">
+                    <a href="./dashboardMedico.html" class="dropDown_link">
                         <img src="../Icons/hogar.png" class="dropDown_icon" alt="un logo">
                         <span class="dropDown_span">Inicio</span>
                     </a>
                 </li>
 
                 <li class="dropDown_list">
-                    <a href="/registrarCita/<%= idMedico %>" class="dropDown_link">
+                    <a href="#" class="dropDown_link">
                         <img src="../Icons/actualizar.png" class="dropDown_icon" alt="un logo">
                         <span class="dropDown_span">Actualizar</span>
                         <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
@@ -112,25 +112,4 @@
     </nav>
 
 
-    <section style="padding: 20px;">
-        <h2>Información del Médico</h2>
-
-        <p><strong>Nombre:</strong> <span id="nombre">Cargando...</span></p>
-        <p><strong>Apellido Materno:</strong> <span id="apellidoM">Cargando...</span></p>
-        <p><strong>Apellido Paterno:</strong> <span id="apellidoP">Cargando...</span></p>
-        <p><strong>Correo:</strong> <span id="email">Cargando...</span></p>
-    </section>
-
-    <section>
-        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
-
-        <h1>Calendario</h1>
-        <div lang="es" id="calendar" style="max-width: 900px; margin: 0 auto;">
-
-        </div>
-        <script type="text/javascript" src="../js/calendar.js"></script>
-    </section>
-
-</body>
-
-</html>
+    <!-- Solo falta cerrar el body en todas las paginas que la utilicen-->

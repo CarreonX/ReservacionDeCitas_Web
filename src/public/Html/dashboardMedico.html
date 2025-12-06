@@ -8,6 +8,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/estiloMenu.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            function getIdMedico() {
+                return window.location.pathname.split("/").pop();
+            }
+            const id = getIdMedico();
+            document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;
+            document.getElementById("linkRegistrarPaciente").href = `/registrarPaciente/${id}`;
+        });
+    </script>
     <script type="text/javascript" src="../../JS/medicos.js"></script>
     <script type="text/javascript" src="../../JS/pacientes.js"></script>
     <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
@@ -133,16 +143,7 @@
         <script type="text/javascript" src="../js/calendar.js"></script>
     </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            function getIdMedico() {
-                return window.location.pathname.split("/").pop();
-            }
-            const id = getIdMedico();
-            document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;
-            document.getElementById("linkRegistrarPaciente").href = `/registrarPaciente/${id}`;
-        });
-    </script>
+
 </body>
 
 </html>

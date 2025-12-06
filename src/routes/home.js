@@ -177,40 +177,51 @@ router.get('/registrarCita/:id_medico', async (req, res) => {
 });
 
 router.post('/registrarCita', async (req, res) => {
-    try {
-        const {
-            duracion,
-            estado,
-            fechaCita,
-            fechaGeneracion,
-            hora,
-            idMedico,
-            idPaciente,
-            motivoDeCita,
-            nota
-        } = req.body;
+  try {
+    const {
+      duracion,
+      estado,
+      fechaCita,
+      fechaGeneracion,
+      hora,
+      idMedico,
+      idPaciente,
+      motivoDeCita,
+      nota
+    } = req.body;
 
-        await DBConnector.queryWithParams(
-            "CALL uspRegistrarCita(?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [
-                duracion,
-                estado,
-                fechaCita,
-                null,
-                hora,
-                idMedico,
-                idPaciente,
-                motivoDeCita,
-                nota
-            ]
-        );
+    await DBConnector.queryWithParams(
+      "CALL uspRegistrarCita(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        duracion,
+        estado,
+        fechaCita,
+        fechaGeneracion || null,
+        hora,
+        idMedico,
+        idPaciente,
+        motivoDeCita,
+        nota
+      ]
+    );
 
-        res.redirect(`/dashboardMedico/${idMedico}`);
-
-    } catch (error) {
-        console.error("❌ Error al registrar cita:", error);
-        res.status(500).send("Error al registrar la cita");
+    // Si la petición viene de fetch (application/json) devolvemos JSON
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('application/json')) {
+      return res.json({ success: true, message: "Cita registrada" });
     }
+
+    // si viene de form tradicional, redirigimos
+    return res.redirect(`/dashboardMedico/${idMedico}`);
+  } catch (error) {
+    console.error("❌ Error al registrar cita:", error);
+    // Si fetch espera JSON, devuelvo JSON con error
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('application/json')) {
+      return res.status(500).json({ success: false, message: "Error al registrar la cita" });
+    }
+    return res.status(500).send("Error al registrar la cita");
+  }
 });
 
 module.exports = router;

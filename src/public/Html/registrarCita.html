@@ -115,48 +115,66 @@
     <div class="contenedor_form">
         <h2>Registrar Nueva Cita</h2>
 
-        
-
-            <!-- ID MÉDICO (no editable pero visible) -->
+        <!-- Nota: removí action/method para que solo haga fetch desde JS -->
+        <form id="formCita" onsubmit="return false;">
             <label>ID Médico</label>
-            <input type="text" title="idMedico" id="idMedico" name="idMedico" value="id_medico" readonly>
+            <!-- input visible readonly -->
+            <input type="text" id="idMedico" name="idMedico" readonly>
 
             <label>ID Paciente</label>
-            <input type="number" title="idPaciente" name="idPaciente" required>
+            <input type="number" id="idPaciente" name="idPaciente" required>
 
             <label>Motivo de la Cita</label>
-            <input type="text" title="motivoDeCita" name="motivoDeCita" required>
+            <input type="text" id="motivoDeCita" name="motivoDeCita" required>
 
             <label>Duración (minutos)</label>
-            <input type="number" title="duracion" name="duracion" required>
+            <input type="number" id="duracion" name="duracion" required>
 
             <label>Estado</label>
-            <select title="estado" name="estado" required>
+            <select id="estado" name="estado" required>
                 <option value="Pendiente">Pendiente</option>
                 <option value="Confirmada">Confirmada</option>
                 <option value="Cancelada">Cancelada</option>
             </select>
 
             <label>Fecha de la Cita</label>
-            <input title="fechaCita" type="date" name="fechaCita" required>
+            <input type="date" id="fechaCita" name="fechaCita" required>
 
             <label>Hora</label>
-            <input title="hora" type="time" name="hora" required>
+            <input type="time" id="hora" name="hora" required>
 
             <label>Nota</label>
-            <textarea title="nota" name="nota"></textarea>
+            <textarea id="nota" name="nota"></textarea>
 
-            <button onclick="registrarCita(); return false" type="submit">Registrar Cita</button>
-
-            <script type="text/javascript" src="../js/citas.js"></script>
-        
+            <!-- botón tipo button para evitar submit HTML -->
+            <button id="btnRegistrar" type="button">Registrar Cita</button>
+        </form>
     </div>
 
+    <!-- scripts -->
     <script>
-        function getIdMedico() {
-            return window.location.pathname.split("/").pop();
+        // obtiene el id del path: /dashboardMedico/5 -> "5"
+        function getIdMedicoFromPath() {
+            const parts = window.location.pathname.split("/");
+            return parts[parts.length - 1] || null;
         }
+
+        // al cargar la página colocamos el id en localStorage, en el input y el link
+        document.addEventListener("DOMContentLoaded", () => {
+            const id = getIdMedicoFromPath();
+            if (id) {
+                localStorage.setItem("idmedico", id);            // clave coherente con el JS
+                const inputId = document.getElementById("idMedico");
+                if (inputId) inputId.value = id;
+                // actualizar enlace registrar
+                const link = document.getElementById("linkRegistrarCita");
+                if (link) link.href = `/registrarCita/${id}`;
+            }
+        });
     </script>
+
+    <!-- carga tu JS corregido -->
+    <script src="../js/citas.js"></script>
 </body>
 
 </html>

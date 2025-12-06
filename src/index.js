@@ -50,12 +50,13 @@ app.get('/api/test', (req, res) => {
 
 app.use('/JS', express.static(path.join(__dirname, 'JS')));
 
+/*
 //Configuracion de plantillas EJS
 app.set('views', path.join(__dirname, 'views'));
 app.use((req, res, next) => {
     res.locals.idMedico = req.params?.id_medico || null;
     next();
-});
+});*/
 
 app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);

@@ -35,7 +35,7 @@ async function ingresar() {
         if (data.success) {
             alert("Ingreso exitoso ✔");
             // Redirigir a panel del médico
-            window.location.href = `/dashboardMedico`; 
+            window.location.href = `/dashboardMedico/${data.id_medico}`; 
         } else {
             alert("Credenciales incorrectas ❌");
         }

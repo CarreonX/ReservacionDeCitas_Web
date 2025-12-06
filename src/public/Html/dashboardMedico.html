@@ -134,7 +134,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const id = localStorage.getItem("id_medico");
+            function getIdMedico() {
+                return window.location.pathname.split("/").pop();
+            }
+            const id = getIdMedico();
             document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;
         });
     </script>

@@ -8,7 +8,20 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/estiloMenu.css">
-    <script defer src="../../JS/pacientes.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            function getIdMedico() {
+                return window.location.pathname.split("/").pop();
+            }
+            const id = getIdMedico();
+
+            // Guardar también en localStorage igual que registrarCita
+            localStorage.setItem("idmedico", id);
+
+            document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;
+            document.getElementById("linkRegistrarPaciente").href = `/registrarPaciente/${id}`;
+        });
+    </script>
     <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
 </head>
 
@@ -155,7 +168,7 @@
             <button type="submit">Registrar Paciente</button>
         </form>
     </div>
-
+    <script type="text/javascript" src="../js/pacientes.js"></script>
 
 </body>
 

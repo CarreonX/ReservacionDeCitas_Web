@@ -99,11 +99,6 @@ router.post( '/login', async (req, res) => {
     }
 } );
 
-app.use((req, res, next) => {
-    res.locals.idMedico = req.params.id_medico || null;
-    next();
-});
-
 router.get('/medico/:id', async (req, res) => {
     const id = req.params.id;
 

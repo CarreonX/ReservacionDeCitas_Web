@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard Médico</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../CSS/estiloMenu.css">
+    <script type="text/javascript" src="../../JS/getIdMedico.js"></script>
+    <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- NAVBAR ORIGINAL, NO MODIFICADO -->
+    <nav class="nav">
+        <div class="nav_container">
+
+            <h1 class="nav_title" id="nombreMedicoNav"><img src="../Images/logo_Clinica.png" alt="logo"
+                    style="width: 60px; height: 60px;"></h1>
+
+
+            <a href="#menu" class="nav_menu">
+                <img src="../Icons/menu-hamburguesa_bco.png" class="nav_icon" alt="un logo">
+            </a>
+            <a href="#" class="nav_menu nav_menu--second">
+                <img src="../Icons/cruz_bca.png" class=" nav_icon" alt="un logo">
+            </a>
+
+            <ul class="dropDown" id="menu">
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/hogar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Inicio</span>
+                    </a>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/actualizar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Actualizar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/basura.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Eliminar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/editar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Registrar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="/registrarCita/<%= idMedico %>" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/usuario.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Mi información</span>
+                    </a>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/interrogatorio.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="contenedor_form">
+        <h2>Registrar Nueva Cita</h2>
+
+        <form action="/registrarCita" method="POST">
+
+            <!-- ID MÉDICO (no editable pero visible) -->
+            <label>ID Médico</label>
+            <input type="text" title="idMedico" id="idMedico" name="idMedico" value="id_medico" readonly>
+
+            <label>ID Paciente</label>
+            <input type="number" title="idPaciente" name="idPaciente" required>
+
+            <label>Motivo de la Cita</label>
+            <input type="text" title="motivoDeCita" name="motivoDeCita" required>
+
+            <label>Duración (minutos)</label>
+            <input type="number" title="duracion" name="duracion" required>
+
+            <label>Estado</label>
+            <select title="estado" name="estado" required>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Cancelada">Cancelada</option>
+            </select>
+
+            <label>Fecha de la Cita</label>
+            <input title="fechaCita" type="date" name="fechaCita" required>
+
+            <label>Hora</label>
+            <input title="hora" type="time" name="hora" required>
+
+            <!-- Autogenerado -->
+
+            <label>Nota</label>
+            <textarea title="nota" name="nota"></textarea>
+
+            <button onclick="registrarCita()" type="submit">Registrar Cita</button>
+
+            <script type="text/javascript" src="../js/citas.js"></script>
+        </form>
+    </div>
+
+</body>
+
+</html>

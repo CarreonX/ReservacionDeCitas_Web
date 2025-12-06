@@ -173,8 +173,7 @@ router.get('/actualizarCita/:id', async (req, res) => {
 });
 
 router.get('/registrarCita/:id_medico', async (req, res) => {
-    const id_medico = req.params.id_medico;
-    res.render('registrarCita', { idMedico: id_medico });
+    res.sendFile(path.join(__dirname, '../public/Html', 'registrarCita.html'));
 });
 
 router.post('/registrarCita', async (req, res) => {
@@ -197,7 +196,7 @@ router.post('/registrarCita', async (req, res) => {
                 duracion,
                 estado,
                 fechaCita,
-                fechaGeneracion,
+                null,
                 hora,
                 idMedico,
                 idPaciente,

@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("apellidoM").textContent = medico.apellidoM;
         document.getElementById("apellidoP").textContent = medico.apellidoP;
         document.getElementById("email").textContent = medico.email;
-        document.getElementById("nombreMedicoNav").textContent = `Bienvenido ${medico.nombre}`;
+        document.getElementById("nombreMedicoNav").textContent = `Bienvenido(a) ${medico.nombre}`;
 
 
         console.log("✔ Datos insertados correctamente");

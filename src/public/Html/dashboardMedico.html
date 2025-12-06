@@ -84,7 +84,7 @@
                     <div class="dropDown_content">
                         <ul class="dropDown_sub">
                             <li class="dropDown_li">
-                                <a href="/registrarCita/<%= idMedico %>" class="dropDown_anchor">Cita</a>
+                                <a id="linkRegistrarCita" href="#" class="dropDown_anchor">Cita</a>
                             </li>
                             <li class="dropDown_li">
                                 <a href="#" class="dropDown_anchor">Paciente</a>
@@ -132,6 +132,15 @@
         <script type="text/javascript" src="../js/calendar.js"></script>
     </section>
 
+    <script>
+        function getIdMedico() {
+            return window.location.pathname.split("/").pop();
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const id = getIdMedico();
+            document.getElementById("linkRegistrarCita").href = `/registrarCita/${id}`;
+        });
+    </script>
 </body>
 
 </html>

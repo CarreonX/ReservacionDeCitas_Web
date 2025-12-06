@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../CSS/estiloMenu.css">
-    <script type="text/javascript" src="../../JS/getIdMedico.js"></script>
+
     <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
 </head>
 
@@ -154,6 +154,11 @@
         </form>
     </div>
 
+    <script>
+        function getIdMedico() {
+            return window.location.pathname.split("/").pop();
+        }
+    </script>
 </body>
 
 </html>

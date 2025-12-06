@@ -22,7 +22,7 @@ async function ingresar() {
         .then( data => {
             if (data.success) {
                 localStorage.setItem("id_medico", data.id_medico);
-                window.location.href = `/dashboardMedico/</id_medico>`; //Aqui
+                window.location.href = `/dashboardMedico/${id_medico}`; //Aqui
             }
             else {
                 alert("Credenciales incorrectas ❌");

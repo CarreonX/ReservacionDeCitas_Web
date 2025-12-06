@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
 
     const id_medico = localStorage.getItem("id_medico");
+    const idMedico = window.location.pathname.split("/").pop();
 
     if (!id_medico) {
         console.error("❌ No existe id_medico en localStorage");

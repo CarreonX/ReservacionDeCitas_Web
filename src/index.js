@@ -15,6 +15,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use((req, res, next) => {
+    res.locals.idMedico = req.params.id_medico || null;
+    next();
+});
+
 // ✅ MIDDLEWARE CORS - AGREGAR ESTO
 app.use(cors({
     origin: ['http://localhost:8080', 'http://localhost:8080'],
@@ -49,10 +54,7 @@ app.get('/api/test', (req, res) => {
 
 app.use('/JS', express.static(path.join(__dirname, 'JS')));
 
-app.use((req, res, next) => {
-    res.locals.idMedico = req.params.id_medico || null;
-    next();
-});
+
 
 app.listen(8080, '0.0.0.0', () => {
     console.log(`🚀 Server ${app.get('appName')} on port ${app.get('port')}`);

@@ -4,7 +4,7 @@ async function registrarCita(){
     const fechaCita = document.getElementsByName("fechaCita").value.trim();
     const fechaGeneracion = document.getElementsByName("fechaGeneracion").value.trim();
     const hora = document.getElementsByName("hora").value.trim();
-    const idMedico = localStorage.getItem("idmedico");
+    const idMedico = localStorage.getItem("idmedico").value.trim();
     const idPaciente = document.getElementsByName("idPaciente").value.trim();
     const motivoDeCita = document.getElementsByName("motivoDeCita").value.trim();
     const nota = document.getElementsByName("nota").value.trim();
@@ -37,6 +37,7 @@ async function registrarCita(){
                 alert("Error al registrar la cita ❌");
             }
         });
+        
     } catch (error) {
         console.error("Error al registrar la cita:", error);
         alert("Error con el servidor");

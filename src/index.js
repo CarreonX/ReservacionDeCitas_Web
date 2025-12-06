@@ -16,14 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    // Buscar ID del médico desde cualquier posible lugar
-    res.locals.idMedico = 
-        req.params.id_medico || 
-        req.query.id_medico || 
-        req.body.id_medico || 
-        req.body.idMedico ||
-        null;
-
+    res.locals.idMedico = req.params?.id_medico || null;
     next();
 });
 

@@ -243,6 +243,7 @@ body {
 
 /* Estilo general para los campos de entrada (input, select, textarea) */
 .contenedor_form input[type="text"],
+.contenedor_form input[type="email"],
 .contenedor_form input[type="number"],
 .contenedor_form input[type="date"],
 .contenedor_form input[type="time"],
@@ -280,7 +281,8 @@ body {
 }
 
 /* Estilo para el botón de envío */
-.contenedor_form button[type="submit"] {
+.contenedor_form button[type="submit"],
+.contenedor_form button[type="button"] {
   display: block;
   width: 100%;
   padding: 12px;
@@ -297,11 +299,13 @@ body {
 }
 
 /* Efecto hover y active en el botón */
-.contenedor_form button[type="submit"]:hover {
+.contenedor_form button[type="submit"]:hover,
+.contenedor_form button[type="button"]:hover {
   background-color: #0a9cf6; /* Un poco más claro al pasar el ratón */
 }
 
-.contenedor_form button[type="submit"]:active {
+.contenedor_form button[type="submit"]:active,
+.contenedor_form button[type="button"]:active {
   background-color: #066aa8; /* Un poco más oscuro al hacer click */
   transform: scale(0.99);
 }

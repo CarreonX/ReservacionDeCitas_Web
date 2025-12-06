@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard Médico</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../CSS/estiloMenu.css">
+    <script defer src="../../JS/pacientes.js"></script>
+    <link rel="icon" href="../Icons/icono_Clinica.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- NAVBAR ORIGINAL, NO MODIFICADO -->
+    <nav class="nav">
+        <div class="nav_container">
+
+            <h1 class="nav_title" id="nombreMedicoNav"><img src="../Images/logo_Clinica.png" alt="logo"
+                    style="width: 60px; height: 60px;"></h1>
+
+
+            <a href="#menu" class="nav_menu">
+                <img src="../Icons/menu-hamburguesa_bco.png" class="nav_icon" alt="un logo">
+            </a>
+            <a href="#" class="nav_menu nav_menu--second">
+                <img src="../Icons/cruz_bca.png" class=" nav_icon" alt="un logo">
+            </a>
+
+            <ul class="dropDown" id="menu">
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/hogar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Inicio</span>
+                    </a>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/actualizar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Actualizar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/basura.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Eliminar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/editar.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Registrar</span>
+                        <img src="../Icons/angulo-derecho.png" class="dropDown_arrow" alt="un logo">
+                        <input type="checkbox" class="dropDown_check" title="" placeholder="f">
+                    </a>
+                    <div class="dropDown_content">
+                        <ul class="dropDown_sub">
+                            <li class="dropDown_li">
+                                <a href="/registrarCita/<%= idMedico %>" class="dropDown_anchor">Cita</a>
+                            </li>
+                            <li class="dropDown_li">
+                                <a href="#" class="dropDown_anchor">Paciente</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/usuario.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Mi información</span>
+                    </a>
+                </li>
+
+                <li class="dropDown_list">
+                    <a href="#" class="dropDown_link">
+                        <img src="../Icons/interrogatorio.png" class="dropDown_icon" alt="un logo">
+                        <span class="dropDown_span">Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="contenedor_form">
+        <h1>Registrar Paciente</h1>
+
+        <form id="formRegistrarPaciente">
+
+            <label>Nombre:</label>
+            <input type="text" id="nombre" required>
+
+            <label>Apellido Paterno:</label>
+            <input type="text" id="apellidoP" required>
+
+            <label>Apellido Materno:</label>
+            <input type="text" id="apellidoM" required>
+
+            <label>Dirección:</label>
+            <input type="text" id="direccion" required>
+
+            <label>Email:</label>
+            <input type="email" id="email" required>
+
+            <label>Teléfono fijo:</label>
+            <input type="text" id="telFijo">
+
+            <label>Teléfono móvil:</label>
+            <input type="text" id="telMovil">
+
+            <label>Fecha nacimiento:</label>
+            <input type="date" id="fechaNacimiento" required>
+
+            <label>ID Respuestas (historial):</label>
+            <input type="number" id="idRespuestas" required>
+
+            <label>Notas:</label>
+            <textarea id="notas"></textarea>
+
+            <label>Peso (kg):</label>
+            <input type="number" id="peso" step="0.1">
+
+            <label>Talla (cm):</label>
+            <input type="number" id="talla">
+
+            <button type="submit">Registrar Paciente</button>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

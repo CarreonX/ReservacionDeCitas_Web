@@ -2,11 +2,12 @@ const DBConnector = require('../config/db.js');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const { registrarPaciente } = require("../controllers/pacientes.controller");
 
 // 👉 Importamos la función de enviar correos
 const { enviarCorreo } = require('./correos.js');
 
-
+router.post("/registrar", registrarPaciente);
 
 // RUTA PRINCIPAL
 router.get('/', (req, res) => {
@@ -221,6 +222,63 @@ router.post('/registrarCita', async (req, res) => {
       return res.status(500).json({ success: false, message: "Error al registrar la cita" });
     }
     return res.status(500).send("Error al registrar la cita");
+  }
+});
+router.post('/registrarPaciente', async (req, res) => {
+  try {
+    const {
+      apellidoM,
+      apellidoP,
+      direccion,
+      email,
+      nombre,
+      telFijo,
+      telMovil,
+      fechaNacimiento,
+      idRespuestas,
+      notas,
+      peso,
+      talla,
+      idMedico
+    } = req.body;
+
+    await DBConnector.queryWithParams(
+      "CALL uspRegistrarPaciente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        apellidoM,
+        apellidoP,
+        direccion,
+        email,
+        nombre,
+        telFijo || null,
+        telMovil || null,
+        fechaNacimiento,
+        idRespuestas,
+        notas || null,
+        peso || null,
+        talla || null,
+        idMedico
+      ]
+    );
+
+    // Si la petición viene desde fetch (JSON)
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('application/json')) {
+      return res.json({ success: true, message: "Paciente registrado correctamente" });
+    }
+
+    // Si viene desde form tradicional, redirige al dashboard
+    return res.redirect(`/dashboardMedico/${idMedico}`);
+
+  } catch (error) {
+    console.error("❌ Error al registrar paciente:", error);
+
+    const contentType = req.headers['content-type'] || '';
+    if (contentType.includes('application/json')) {
+      return res.status(500).json({ success: false, message: "Error al registrar el paciente" });
+    }
+
+    return res.status(500).send("Error al registrar el paciente");
   }
 });
 

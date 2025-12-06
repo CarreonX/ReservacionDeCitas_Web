@@ -1,4 +1,4 @@
-/*document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
     const url = new URL(window.location.href);
     const idMedico = url.searchParams.get("idMedico");
@@ -51,4 +51,4 @@
         }
     });
 
-});*/
+});

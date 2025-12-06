@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
     // 1. Obtener id_medico desde la URL
-    const params = new URLSearchParams(window.location.search);
-    const id_medico = params.get("id_medico");
+    //const params = new URLSearchParams(window.location.search);
+    const id_medico = localStorage.getItem("id_medico");
 
     if (!id_medico) {
         console.error("❌ No se recibió id_medico en la URL");
